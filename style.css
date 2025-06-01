@@ -1,0 +1,4128 @@
+.hidden { display: none; }
+#login-overlay,
+#auth-modal { 
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  /* …фон, центрирование, стили… */
+}
+
+/* 1) ФОН С ЧАСТИЦАМИ */
+#particles-js {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+}
+
+/* 2) Сброс и переменные */
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg-start: #1a1a2e;
+  --bg-end:   #0f3460;
+  --accent:   #f1c40f;
+  --text:     #fff;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 3) HEADER */
+.site-header {
+  position: fixed; top: 0; width: 100%;
+  display: flex; justify-content: space-between;
+  padding: 16px 24px;
+  z-index: 10;
+}
+.site-header nav a {
+  color: var(--text);
+  margin-right: 16px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.theme-toggle {
+  background: transparent;
+  border: 2px solid var(--text);
+  border-radius: 50%; width:32px; height:32px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* 4) CONTAINER */
+.container {
+  padding-top: 96px;
+  margin: 0 auto;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* 5) COOLER */
+.cooler-wrapper {
+  margin: 0 auto 16px;
+  width: 140px; height: 140px;
+}
+.cooler {
+  position: relative; width:100%; height:100%;
+}
+.blade {
+  position:absolute; inset:0;
+  background:url('blade.png') no-repeat center/contain;
+  animation: spin 2s linear infinite;
+}
+.housing {
+  position:absolute; inset:0;
+  background:url('housing.png') no-repeat center/contain;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 6) POWER STATS */
+.power-stats {
+  display: flex; justify-content: center; align-items: center;
+  gap: 12px; margin-bottom: 8px;
+}
+.power-value {
+  font-size: 1.5rem; font-weight: bold;
+}
+.power-value small { font-size: .75rem; opacity: .8; }
+.button.accent {
+  background: var(--accent);
+  color: #000;
+}
+
+/* 7) PROGRESS RING */
+.progress-ring {
+  margin: -120px auto 16px;
+}
+.progress-ring__circle {
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  stroke-dasharray:  (2 * 3.1416 * 94);
+  stroke-dashoffset: (2 * 3.1416 * 94 * (1 - 0.6)); /* 60% прогресс */
+}
+
+/* 8) INFO BOX */
+.power-info {
+  background: rgba(0,0,0,.4);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+.info-row {
+  display: flex; justify-content: space-between;
+  font-size: .9rem; padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.info-row:last-child { border-bottom: none; }
+
+/* 9) COIN COUNTER */
+.coin-counter {
+  display: inline-flex; align-items: center; gap:6px;
+  border:2px solid var(--accent);
+  padding:6px 12px; border-radius:4px;
+  font-weight:bold; margin-bottom:16px;
+}
+.coin-counter img { width:18px; height:18px; }
+
+/* 10) TABS */
+.power-tabs {
+  display: flex; gap:4px; margin-bottom:16px;
+}
+.tab {
+  flex:1; padding:6px 0;
+  background: rgba(255,255,255,.1);
+  border:none; border-radius:4px;
+  color: var(--text); font-weight:500;
+  cursor: pointer;
+}
+.tab.active {
+  background: var(--accent);
+  color: #000;
+}
+
+/* 11) CARDS */
+.power-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap:8px;
+  margin-bottom:24px;
+}
+.card {
+  background: rgba(255,255,255,.1);
+  border-radius:8px; padding:8px;
+  text-align: center;
+}
+.card img {
+  width:100%; height:auto; border-radius:6px;
+}
+.card-title { margin-top:8px; font-weight:bold; }
+.card-sub { font-size:.85rem; opacity:.8; }
+.card-level { font-size:.75rem; color: var(--accent); }
+
+/* 12) MOBILE NAV */
+.mobile-nav {
+  position: fixed; bottom:0; left:0; right:0;
+  display: flex; background: rgba(0,0,0,.5);
+}
+.nav-btn {
+  flex:1; padding:8px 0; color: #fff;
+  border:none; background:transparent; cursor: pointer;
+}
+.nav-btn.active { background: rgba(255,255,255,.1); }
+
+/* 13) RESPONSIVE */
+@media(max-width: 380px){
+  .container { padding-top: 80px; }
+  .progress-ring { margin-top:-100px; }
+}
+.progress-ring {
+  display: none !important;
+}
+/* Power‐счётчик (верх) */
+.coin-power {
+  display:flex;
+  align-items:center;
+  color:#fff;
+}
+.coin-power img { width:24px; margin-right:8px; }
+
+/* Баланс (низ) */
+.coin-balance {
+  display:flex;
+  align-items:center;
+  margin:16px auto;
+}
+.coin-balance img { width:24px; margin-right:8px; }
+/* контейнер в header для кнопок */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/*  WALLET-панель */
+.wallet-panel {
+  position: absolute;
+  /* правый край чуть отступаем от края окна */
+  right: 24px;
+  /* начнём прямо под шапкой (или сдвиньте по вкусу) */
+  top: 64px;
+  width: 280px;
+  max-height: 0;
+    overflow-x: hidden; /* если вам нужно убрать только горизонтальный скролл */
+  overflow-y: auto;   /* включаем вертикальную прокрутку */
+  background: rgba(0,0,0,0.8);
+  border-radius: 8px;
+  transition: max-height 0.4s ease;
+  z-index: 20;
+}
+
+/* стики-линия */
+.wallet-panel__stick {
+  position: absolute;
+  /* привязываем к верхнему центру панели */
+  top: -16px;
+  left: 50%;
+  width: 2px;
+  height: 16px;
+  background: var(--accent);
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+/* содержимое */
+.wallet-panel__content {
+  padding: 16px;
+  color: #fff;
+}
+
+/* когда панель открыта */
+.wallet-panel.show {
+  /* высоту указываем чуть больше, чем контент */
+  max-height: 400px;
+}
+.wallet-panel.show .wallet-panel__stick {
+  opacity: 1;
+}
+.wallet-panel__content h2 {
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+#wallet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#wallet-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+#wallet-list li:last-child {
+  border-bottom: none;
+}
+#wallet-list li span {
+  font-size: 0.9rem;
+}
+/* сам оверлей */
+.wallet-panel {
+  position: fixed;
+  top: 60px; right: 16px;
+  width: 220px;
+  background: rgba(0,0,0,0.8);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  display: none;            /* скрыто по умолчанию */
+  flex-direction: column;
+  z-index: 15;
+}
+/* маленькая «штучка»-сосиска, соединяющая окно с кнопкой */
+.wallet-panel__stick {
+  position: absolute;
+  top: -8px; right: 16px;
+  width: 16px; height: 8px;
+  background: rgba(0,0,0,0.8);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+/* контент внутри */
+.wallet-panel__content {
+  padding: 12px;
+  color: #fff;
+}
+.wallet-panel__content h2 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  color: var(--accent);
+  text-align: center;
+}
+#wallet-list {
+  list-style: none;
+  margin: 0; padding: 0;
+}
+#wallet-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+#wallet-list li:last-child {
+  border-bottom: none;
+}
+.wallet-panel {
+  position: fixed;
+  top: 60px;
+  right: 16px;
+  width: 240px;
+  background: rgba(0,0,0,0.85);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  display: none;             /* скрыто по умолчанию */
+  flex-direction: column;
+  z-index: 15;
+}
+.wallet-panel.show {
+  display: flex;
+}
+.wallet-panel__stick {
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 16px;
+  height: 8px;
+  background: rgba(0,0,0,0.85);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+.wallet-panel__content {
+  padding: 12px;
+  color: #fff;
+}
+.wallet-panel__content h2 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  color: var(--accent);
+  text-align: center;
+}
+#wallet-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#wallet-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+#wallet-list li:last-child {
+  border-bottom: none;
+}
+/* ——— Анимация кнопки WALLET ——— */
+#wallet-btn {
+  transition: transform .2s ease;
+  /* чуть приподнятие при появлении: */
+  animation: fadeIn 0.5s ease both;
+}
+#wallet-btn:hover {
+  transform: scale(1.1);
+}
+#wallet-btn:active {
+  transform: scale(0.95);
+}
+
+/* ——— Анимация панели WALLET ——— */
+.wallet-panel {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+.wallet-panel.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* плавное появление кнопки */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px) scale(1); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* ——— ПАНЕЛЬ WALLET ——— */
+.wallet-panel {
+  position: fixed;
+  top: 64px;           /* под шапкой */
+  right: 16px;
+  width: 260px;
+  background: rgba(0,0,0,0.85);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  display: none;       /* скрыта по-умолчанию */
+  flex-direction: column;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity .3s ease, transform .3s ease;
+  z-index: 1000;
+}
+
+.wallet-panel.show {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* «носик» панели */
+.wallet-panel__stick {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 16px; height: 8px;
+  background: rgba(0,0,0,0.85);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transform: translateX(-50%);
+}
+
+/* заголовок */
+.wallet-panel__content h2 {
+  margin: 0 0 8px;
+  text-align: center;
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+/* общий баланс */
+.wallet-total {
+  text-align: center;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* список валют */
+#wallet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#wallet-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+#wallet-list li:last-child {
+  border-bottom: none;
+}
+/* лёгкая пульсация/увеличение при наведении */
+#wallet-btn {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+#wallet-btn:hover {
+  transform: scale(1.05);
+  background-color: rgba(241, 196, 15, 0.8);
+}
+/* ---------------------------------------------------
+   1) Кнопка WALLET
+--------------------------------------------------- */
+#wallet-btn {
+
+  color: var(--accent);
+  padding: 8px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+#wallet-btn:hover {
+  background: var(--accent);
+  color: #000;
+  transform: scale(1.05);
+}
+
+/* ---------------------------------------------------
+   2) Панель WALLET
+--------------------------------------------------- */
+.wallet-panel {
+  position: fixed;
+  top: 64px;      /* чуть ниже шапки */
+  right: 16px;
+  width: 240px;
+  background: rgba(10, 14, 32, 0.95); /* чуть более плотный тёмный фон */
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 20;
+}
+
+/* «Сосиска» */
+.wallet-panel__stick {
+  position: absolute;
+  top: -8px;
+  right: 24px;
+  width: 16px;
+  height: 8px;
+  background: rgba(10, 14, 32, 0.95);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transition: background 0.3s ease;
+}
+
+/* Заголовок */
+.wallet-panel__content h2 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+/* Список валют */
+#wallet-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#wallet-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 0.95rem;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+#wallet-list li:last-child {
+  border-bottom: none;
+}
+
+/* Стиль общего баланса */
+.wallet-total {
+  margin-bottom: 12px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+/* ---------------------------------------------------
+   3) Состояние «открыто»
+--------------------------------------------------- */
+.wallet-panel.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+/* 1) Кнопка WALLET */
+#wallet-btn {
+
+  color: var(--accent);
+  padding: 8px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+#wallet-btn:hover {
+  background: var(--accent);
+  color: #000;
+  transform: scale(1.05);
+}
+
+/* 2) Панель и её «сосиска» */
+.wallet-panel {
+  position: fixed;
+  top: 64px; right: 16px;
+  width: 420px;   /* ≈240px * 1.7 */
+  background: rgba(10,14,32,0.95);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 20;
+}
+.wallet-panel.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+.wallet-panel__stick {
+  position: absolute;
+  top: -8px; right: 24px;
+  width: 16px; height: 8px;
+  background: rgba(10,14,32,0.95);
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
+}
+
+/* 3) Заголовок и общий баланс */
+.wallet-panel__content h2 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--accent);
+}
+.wallet-total {
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* 4) Поле поиска */
+#wallet-search {
+  width: 100%;
+  padding: 6px 8px;
+  margin: 0 0 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  
+  color: var(--text);
+}
+
+/* 5) Список монет */
+#wallet-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+#wallet-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: .95rem;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+#wallet-list li:last-child {
+  border-bottom: none;
+}
+/* Добавьте в конец вашего style.css */
+
+/* Анимация полёта карточки в центр и исчезновения */
+@keyframes flyToCenter {
+  to {
+    transform: translate(
+        calc(50vw - 50% - var(--card-left)),
+        calc(50vh - 50% - var(--card-top))
+      )
+      scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Когда карточка должна «лететь» */
+.card.fly {
+  position: absolute;
+  z-index: 1000;
+  animation: flyToCenter 0.8s ease-out forwards;
+}
+
+/* Оверлей с кнопкой «Получить» */
+#reward-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;         /* по умолчанию скрыт */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+  z-index: 2000;
+}
+
+#reward-panel.show {
+  display: flex;
+}
+
+#reward-panel button {
+  padding: 1em 2em;
+  font-size: 1rem;
+  background: #f1c40f;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.get-reward-btn:hover {
+  background-color: rgba(241,196,15,0.9);
+}
+/* fullscreen-анимация */
+.card.fullscreen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  margin: -200px 0 0 -200px;
+  z-index: 1000;
+  background: #1e293b;
+  border-radius: 12px;
+    overflow-x: hidden; /* если вам нужно убрать только горизонтальный скролл */
+  overflow-y: auto;   /* включаем вертикальную прокрутку */
+  transform-origin: center center;
+  transition: transform 0.6s ease-in-out, width 0.6s, height 0.6s, top 0.6s, left 0.6s;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* кнопка Получить */
+.card.fullscreen .claim-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f1c40f;
+  color: #1e293b;
+  border: none;
+  padding: 0.8em 1.6em;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: background-color 0.2s;
+}
+.card.fullscreen .claim-btn:hover {
+  background-color: #ddb10f;
+}
+/* Кнопка «Получить» при анимации */
+.get-reward-btn {
+  background-color: #f1c40f;
+  color: #1e293b;
+  border: none;
+  padding: 0.8em 1.6em;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.get-reward-btn:hover {
+  background-color: #ddb10f;
+}
+/* Кнопка «Получить» */
+.get-reward-btn {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 10001;
+
+  padding: 0.8em 1.6em;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  background: linear-gradient(135deg, #fbc531, #f1c40f);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  cursor: pointer;
+
+  transition:
+    transform 0.4s cubic-bezier(0.25, 1.25, 0.5, 1),
+    opacity 0.4s ease-out;
+}
+.get-reward-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+/* Фон модального окна */
+.card-modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  pointer-events: none;
+}
+.card-modal-bg.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Само окно */
+.card-modal {
+  background: #1e293b;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 90%;
+  max-height: 90%;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  transform: scale(0.8);
+  transition: transform 0.3s ease-out;
+}
+.card-modal-bg.show .card-modal {
+  transform: scale(1);
+}
+.card-modal img {
+  max-width: 200px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+.card-modal h3 {
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
+}
+.card-modal p {
+  margin: 0.25rem 0 1rem;
+  font-size: 1.1rem;
+}
+/* затемнённый фон */
+.card-modal-overlay {
+  cursor: default;
+}
+
+/* внутренняя карточка-модал */
+.card-modal {
+  background: #1f2937;  /* или ваш цвет карточек */
+  border-radius: 12px;
+    overflow-x: hidden; /* если вам нужно убрать только горизонтальный скролл */
+  overflow-y: auto;   /* включаем вертикальную прокрутку */
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* кнопка внутри модалки */
+.get-reward-btn.modal {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.8em 1.5em;
+  background-color: #f1c40f;
+  color: #111;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.get-reward-btn.modal:hover {
+  transform: scale(1.05);
+}
+/* делаем карточку-модал контейнером для абсолютной кнопки */
+.card-modal {
+  position: relative;
+  padding-bottom: 3.5em; /* чтобы кнопка не наезжала на содержимое */
+}
+
+/* стиль кнопки внутри модалки */
+.get-reward-btn.modal {
+  /* все стили мы задаём через JS, но здесь можно дополнить: */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.get-reward-btn.modal:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+.wallet-btn {
+  display: inline-block;
+  cursor: pointer;
+  width: 48px;   /* подгоните под размер вашего png */
+  height: 48px;
+  /* если нужно круглый/с закруглениями: */
+  border-radius: 8px;
+    overflow-x: hidden; /* если вам нужно убрать только горизонтальный скролл */
+  overflow-y: auto;   /* включаем вертикальную прокрутку */
+  transition: transform 0.2s ease;
+}
+
+.wallet-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.wallet-btn:hover {
+  transform: scale(1.1);
+}
+.card-modal {
+  position: relative;
+}
+/* Секция обмена */
+.exchange-panel {
+  background: rgba(0,0,0,0.5);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+.exchange-panel h3 {
+  margin-bottom: 0.5rem;
+  color: #ffd700;
+}
+.exchange-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.exchange-row input {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: none;
+}
+.exchange-result {
+  margin-top: 0.5rem;
+  color: #fff;
+}
+
+/* Промо-блок */
+.special-promo {
+  background: rgba(0,0,0,0.5);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+.special-promo h3 {
+  margin-bottom: 0.5rem;
+  color: #ffd700;
+}
+.special-promo p {
+  margin-bottom: 1rem;
+  color: #ccc;
+}
+/* Кнопка скачать */
+.download-btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background: #f1c40f;
+  color: #000;
+  border-radius: 0.3rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.download-btn:hover {
+  background: #e0ac0f;
+}
+.special-section { color: #fff; padding: 1em; }
+.special-section .exchange input { width: 60%; padding: .5em; margin-right: .5em; }
+/* ========= СПЕЦИАЛЬНЫЙ БЛОК ========= */
+.special-section {
+  
+  color: #ffffff;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.special-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Обмен TON→TRX */
+.special-section .exchange {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.special-section .exchange input {
+  width: 200px;
+  padding: 0.5rem;
+  border: 2px solid #444;
+  border-radius: 0.3rem;
+  background: #1a1f33;
+  color: #fff;
+  transition: border-color 0.2s;
+}
+.special-section .exchange input:focus {
+  outline: none;
+  border-color: #f1c40f;
+}
+
+/* Кнопки общего стиля */
+.button.accent,
+.get-reward-btn,
+#exchange-btn,
+.special-section a.button {
+  background: #f1c40f;
+  color: #1a1f33;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.button.accent:hover,
+.get-reward-btn:hover,
+#exchange-btn:hover,
+.special-section a.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(241,196,15,0.4);
+}
+
+/* Описание приложения */
+.special-section .app-info p {
+  max-width: 600px;
+  margin: 0.5rem auto 1.5rem;
+  line-height: 1.4;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+/* ==== Специальные ==== */
+.special-section {
+  max-width: 800px;
+  margin: 2rem auto;
+  color: #fff;
+  animation: fadeIn 0.5s ease-out;
+}
+.exchange-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.exchange-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #f1c40f;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+}
+.exchange {
+  display: flex;
+  gap: .5rem;
+}
+.exchange input {
+  width: 160px;
+  padding: .6rem;
+  background: #1a1f33;
+  border: 2px solid #444;
+  border-radius: .3rem;
+  color: #fff;
+  transition: border-color .2s;
+}
+.exchange input:focus {
+  outline: none;
+  border-color: #f1c40f;
+}
+#exchange-btn {
+  background: #f1c40f;
+  color: #1a1f33;
+  border: none;
+  padding: .6rem 1.2rem;
+  border-radius: .3rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: transform .2s, box-shadow .2s;
+}
+#exchange-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(241,196,15,0.4);
+}
+.exchange-result {
+  width: 100%;
+  text-align: center;
+  margin-top: .5rem;
+  font-size: .95rem;
+  min-height: 1.2em;
+}
+.app-info {
+  text-align: center;
+}
+.app-info h3 {
+  color: #f1c40f;
+  margin-bottom: .5rem;
+}
+.app-info p {
+  line-height: 1.4;
+  opacity: .9;
+  margin-bottom: 1.5rem;
+}
+.app-info .button.accent {
+  padding: .6rem 1.2rem;
+  border-radius: .3rem;
+  transition: transform .2s, box-shadow .2s;
+}
+.app-info .button.accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(241,196,15,0.4);
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* Модалка */
+.exchange-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.exchange-modal.show {
+  display: flex;
+}
+.exchange-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(2px);
+}
+.exchange-modal__content {
+  position: relative;
+  background: #1b2435;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  text-align: center;
+  max-width: 360px;
+  width: 100%;
+  color: #fff;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+.exchange-modal.show .exchange-modal__content {
+  transform: scale(1);
+}
+.exchange-modal__close {
+  position: absolute;
+  top: .5rem; right: .5rem;
+  background: none; border: none;
+  font-size: 1.5rem; color: #fff;
+  cursor: pointer;
+}
+.exchange-modal__form input {
+  width: 100%;
+  padding: .75rem;
+  margin-bottom: .5rem;
+  border: none;
+  border-radius: 6px;
+  background: #273045;
+  color: #fff;
+}
+.exchange-modal__live {
+  margin-bottom: 1rem;
+  font-size: .9rem;
+  color: #f1c40f;
+}
+.exchange-modal__form .button {
+  background: #f1c40f;
+  color: #1b2435;
+  padding: .75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.exchange-modal__form .button:hover {
+  background: #d4ac0d;
+}
+/* контейнер специального раздела */
+.special-section {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+/* сам inline-модал */
+.exchange-inline {
+  background: #1b2633;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* заголовок */
+.exchange-title {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* поле ввода */
+.exchange-input {
+  width: 280px;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: #273045;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+}
+
+/* текст результата */
+.exchange-live {
+  color: #f1c40f;
+  margin-bottom: 1rem;
+}
+
+/* кнопка */
+.exchange-button {
+  background: #f1c40f;
+  color: #1b2633;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.exchange-button:hover {
+  background: #d4ac0d;
+}
+/* Контейнер для двух блоков */
+.special-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+/* Базовый фон и паддинги у обоих блоков */
+.exchange-inline,
+.app-info {
+  background: #1b2633;
+  padding: 1.5rem;
+  border-radius: 8px;
+  min-width: 280px;
+  max-width: 360px;
+  flex: 1;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Заголовок обмена */
+.exchange-title,
+.app-info__title {
+  color: #ffffff;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Поле ввода */
+.exchange-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: #273045;
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+/* Live-результат */
+.exchange-live {
+  color: #f1c40f;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+/* Кнопка в блоке обмена */
+.exchange-button {
+  background: #f1c40f;
+  color: #1b2633;
+  padding: 0.6em 1.2em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.exchange-button:hover {
+  background: #d4ac0d;
+}
+
+/* Описание приложения */
+.app-info__desc {
+  color: #dddfe8;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+/* Кнопка скачивания */
+.app-info__btn {
+  background: #f1c40f;
+  color: #1b2633;
+  padding: 0.6em 1.2em;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+.app-info__btn:hover {
+  background: #d4ac0d;
+}
+/* Контейнер спец. секции: два блока в ряд */
+.special-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Блок обмена */
+.exchange-inline {
+  background: #1b2633;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;      /* столбцом */
+  align-items: center;         /* по центру по горизонтали */
+  width: 300px;                /* или ваша желаемая ширина */
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Заголовок обмена */
+.exchange-inline .exchange-title {
+  font-size: 1.25rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* Инпут */
+.exchange-inline .exchange-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  background: #273045;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+}
+
+/* Live-результат */
+.exchange-inline .exchange-live {
+  color: #f1c40f;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+/* Кнопка обмена */
+.exchange-inline .exchange-button {
+  background: #f1c40f;
+  color: #1b2633;
+  padding: 0.6em 1.2em;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+.exchange-inline .exchange-button:hover {
+  background: #d4ac0d;
+}
+
+/* Блок приложения (рядом с обменом) */
+.app-info {
+  background: #1b2633;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 300px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.app-info__title {
+  font-size: 1.25rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.app-info__desc {
+  color: #dddfe8;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+.app-info__btn {
+  background: #f1c40f;
+  color: #1b2633;
+  padding: 0.6em 1.2em;
+  text-decoration: none;
+  border-radius: 4px;
+  display: inline-block;
+}
+.app-info__btn:hover {
+  background: #d4ac0d;
+}
+/* Блок обмена в special-section */
+.special-wrapper .exchange-inline .exchange-title {
+  writing-mode: horizontal-tb; /* горизонтальное письмо */
+  transform: none;              /* никакого поворота */
+  font-size: 1.25rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+/* в styles.css */
+.tabs-content { position: relative; }
+.tab-panel {
+  position: absolute; top:0; left:0; width:100%;
+  opacity: 0; transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.tab-panel.active {
+  position: relative;
+  opacity: 1; transform: translateY(0);
+  pointer-events: all;
+}
+/* Сделать кнопку WALLET фиксированной справа сверху */
+#wallet-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+}
+
+/* Подвинуть панель кошелька чуть ниже, чтобы она не закрывала кнопку */
+#wallet-panel {
+  top: 56px;   /* 16px от края + 40px высота кнопки примерно */
+  right: 16px;
+  /* остальной ваш стиль */
+}
+.hide-zero {
+  display: block;
+  margin: 8px 0;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+.hide-zero input {
+  margin-right: 4px;
+}
+/* Стили для каждой строки в списке Wallet */
+#wallet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.wallet-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.wallet-item__coin {
+  flex: 1;
+  color: #fff;
+  font-weight: 500;
+}
+.wallet-item__balance {
+  text-align: right;
+  color: #fff;
+}
+.wallet-item__usd {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6); /* чуть темнее/светлее основного текста */
+  margin-top: 0.1rem;
+}
+/* Login overlay */
+#login-overlay {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: #000;
+  z-index:1000;
+}
+#login-overlay video#bg-video {
+  position:absolute;
+  top:0; left:0; width:100%; height:100%;
+  object-fit:cover;
+  z-index:100;
+}
+
+
+/* Auth modal */
+.hidden { display:none; }
+#error { color:#e74c3c; }
+#auth-modal {
+  position:fixed; top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,0.75);
+  display:flex; justify-content:center; align-items:center;
+  z-index:1100;
+}
+.auth-content {
+  background:#1c1f2b; padding:2em;
+  border-radius:8px; width:320px; text-align:center;
+}
+.auth-content input {
+  width:100%; margin:0.5em 0;
+  padding:0.5em; border-radius:4px; border:none;
+}
+.auth-content button {
+  width:100%; padding:0.7em;
+  background:#f1c40f; border:none;
+  border-radius:4px; cursor:pointer;
+  margin-top:1em;
+}
+.auth-content p#error { margin-top:0.5em; }
+
+/* referral-container */
+#referral-container { margin-top:0.5em; }
+#toggle-auth {
+  margin-top:1em; color:#ccc; cursor:pointer;
+}
+/* Скрывающий класс */
+.hidden {
+  display: none !important;
+}
+
+/* Оверлей на весь экран */
+#login-overlay,
+#auth-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000; /* или больше, чем у всего остального */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000; /* или полупрозрачный фон */
+}
+
+/* Когда показываем модалку, запрещаем скролл */
+body.login-active {
+   overflow-x: hidden; /* если вам нужно убрать только горизонтальный скролл */
+  overflow-y: auto;   /* включаем вертикальную прокрутку */
+}
+/* 1) Скрытый по умолчанию оверлей (чтобы фон видео всегда за кнопкой) */
+#login-overlay {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: #000;
+    overflow-x: hidden; /* если вам нужно убрать только горизонтальный скролл */
+  overflow-y: auto;   /* включаем вертикальную прокрутку */
+}
+
+/* ——— 10 эффектов ——— */
+
+/* 1) Пульс */
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(255,204,0,0.6); }
+  50%     { box-shadow: 0 0 1.5em 0 rgba(255,204,0,0.6); }
+}
+.effect-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* 2) Неон */
+@keyframes neon {
+  0%,100% { text-shadow:
+      0 0 0.2em #fff,
+      0 0 0.5em #ff0; }
+  50% { text-shadow:
+      0 0 0.4em #fff,
+      0 0 1em #ff0; }
+}
+.effect-neon {
+  animation: neon 1.5s infinite alternate;
+}
+
+/* 3) Градиентный фон */
+.effect-gradient {
+  background: linear-gradient(45deg, #ff0, #fcc, #ff0);
+  background-size: 200% 200%;
+  animation: gradBG 3s ease infinite;
+}
+@keyframes gradBG {
+  0% { background-position: 0% 50%; }
+  50%{ background-position:100% 50%; }
+ 100%{ background-position: 0% 50%; }
+}
+
+/* 4) Вращение */
+.effect-spin {
+  animation: spin 4s linear infinite;
+}
+@keyframes spin {
+  from{transform: rotate(0deg);} to{transform: rotate(360deg);}
+}
+
+/* 5) Вспышка */
+@keyframes flash {
+  0%,80%,100% { background: rgba(255,204,0,0.8); }
+  90%         { background: #fff; }
+}
+.effect-flash {
+  animation: flash 2s ease-in-out infinite;
+}
+
+/* 6) Ripple при клике (JS допишем ниже) */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: rippleAnim 0.6s linear;
+  background: rgba(255,204,0,0.5);
+}
+@keyframes rippleAnim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* 7) Партиклы (конфетти) на hover — добавляем через JS */
+
+/* 8) 3D-наклон */
+.effect-tilt {
+  perspective: 500px;
+}
+.effect-tilt:hover {
+  transform: rotateX(10deg) rotateY(-10deg) scale(1.05);
+}
+
+/* 9) Вибрация */
+@keyframes vib {
+  0%,100% { transform: translateX(0); }
+  20%,60% { transform: translateX(-4px); }
+  40%,80% { transform: translateX(4px); }
+}
+.effect-vibe {
+  animation: vib 0.5s infinite;
+}
+
+/* 10) Биение (quick pulse) */
+@keyframes beat {
+  0%,100% { transform: scale(1); }
+  25%,75% { transform: scale(1.1); }
+}
+.effect-beat {
+  animation: beat 1s infinite;
+}
+/* общий контейнер, чтобы центрировать кнопку и применить overflow:hidden */
+.neon-btn {
+  position: relative;
+  display: inline-block;
+  padding: 1em 2.5em;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0,0,0,0.4);
+  border: none;
+  border-radius: 0.6em;
+  cursor: pointer;
+  z-index: 1;
+    overflow-x: hidden; /* если вам нужно убрать только горизонтальный скролл */
+  overflow-y: auto;   /* включаем вертикальную прокрутку */
+  transition: background 0.3s ease;
+}
+
+/* внутренняя подсветка */
+.neon-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #f1c40f, #e74c3c, #8e44ad, #3498db, #2ecc71, #f1c40f
+  );
+  animation: spinNeon 4s linear infinite;
+  mix-blend-mode: screen;
+  filter: blur(20px);
+}
+
+/* тёмный фон под текстом, чтобы не мешало glow */
+.neon-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: inherit;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+/* при наведении / нажатии чуть светлее */
+.neon-btn:hover {
+  background: rgba(0,0,0,0.6);
+}
+
+/* сам спин эффекта */
+@keyframes spinNeon {
+  to { transform: rotate(360deg); }
+}
+
+/* ripple-эффект по клику */
+.neon-btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  transform: scale(0);
+  animation: rippleAnim 0.6s ease-out;
+  pointer-events: none;
+}
+@keyframes rippleAnim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+/* Неоновая круглая кнопка */
+.neon-btn {
+  --clr: #0ff;               /* цвет неона */
+  width: 120px;
+  height: 120px;
+  border: 2px solid var(--clr);
+  border-radius: 50%;
+  background: #000;
+  color: var(--clr);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  box-shadow:
+    0 0 20px var(--clr),
+    inset 0 0 30px var(--clr);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Сам текст поверх всё-таки выше */
+.neon-btn span {
+  position: relative;
+  z-index: 2;
+}
+
+/* Пульсирующие внешние кольца */
+.neon-btn::before,
+.neon-btn::after {
+  content: "";
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  width: 150%;
+  height: 150%;
+  border: 2px solid var(--clr);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: pulse-ring 2s infinite ease-in-out;
+}
+
+.neon-btn::after {
+  animation-delay: 1s;
+}
+
+/* Анимация пульсации */
+@keyframes pulse-ring {
+  from {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Эффект при наведении */
+.neon-btn:hover {
+  box-shadow:
+    0 0 30px var(--clr),
+    inset 0 0 40px var(--clr);
+}
+
+
+/* Сделаем изображение ровно под размер кнопки */
+
+/* При наведении чуть «подсвечиваем» */
+.start-btn:hover img {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+/* При нажатии — лёгкий «вжик» */
+.start-btn:active img {
+  transform: scale(0.95);
+  filter: brightness(0.8);
+}
+/* 1) Сам контейнер-кнопка без фона и паддингов */
+
+/* 2) Само изображение растягиваем на нужный размер */
+
+
+/* 3) Взаимодействие (наведение/клик) */
+#start-btn:hover img {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+#start-btn:active img {
+  transform: scale(0.95);
+  filter: brightness(0.8);
+}
+/* общий стиль для любых фоновых видео */
+video {
+  position: fixed;
+  top:   0;
+  left:  0;
+  width: 100vw;
+  height:100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* чтобы второй bg-video не мелькал до перехода */
+#app-bg-video {
+  display: none;
+}
+
+/* когда приложение включено — показываем его фон */
+#main-app.show-bg #app-bg-video {
+  display: block;
+}
+
+/* сам контейнер main-app */
+#main-app {
+  position: relative;
+  z-index: 10;       /* поверх фонового видео */
+}
+/* Спрячем видео по-умолчанию */
+.app-bg-video {
+  display: none;
+}
+
+/* Когда показываем главный экран — включаем фон */
+#main-app:not(.hidden) .app-bg-video {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+/* 1) Оба видео во всю ширину/высоту и под остальным контентом */
+#bg-video,
+.app-bg-video {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* 2) По умолчанию скрываем второй фон */
+.app-bg-video {
+  display: none;
+}
+
+/* 3) Показываем .app-bg-video только когда #main-app не скрыт */
+#main-app:not(.hidden) .app-bg-video {
+  display: block;
+}
+/* общий сброс */
+* { margin:0; padding:0; box-sizing:border-box; }
+
+/* подложка-видео на полный экран */
+.full-bg {
+  position:fixed; top:0; left:0;
+  width:100vw; height:100vh;
+  object-fit:cover;
+  z-index:-1;
+}
+
+/* центральная кнопка */
+.center-btn {
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  padding:1em 2em;
+  font-size:1.2rem;
+  cursor:pointer;
+}
+
+/* модальное окно логина */
+.modal {
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(0,0,0,0.7);
+  padding:2em;
+  border-radius:8px;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  gap:0.5em;
+  width:300px;
+}
+.hidden { display:none; }
+
+/* остальной CSS — ваш style.css */
+/* 1) Кнопка внизу */
+
+/* 2) Базовая подсветка */
+#start-btn img {
+  width: 100px;
+  height: 100px;
+  transition: filter 0.3s ease, transform 0.2s ease;
+  filter: drop-shadow(0 0 8px cyan)
+          drop-shadow(0 0 16px cyan)
+          drop-shadow(0 0 24px blue);
+}
+
+/* 3) Наведение: усиливаем glow и чуть увеличиваем */
+#start-btn:hover img {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 12px cyan)
+          drop-shadow(0 0 24px cyan)
+          drop-shadow(0 0 36px blue);
+}
+
+/* 4) Клик: визуальный отклик «вжатия» */
+#start-btn:active img {
+  transform: scale(0.95);
+  filter: drop-shadow(0 0 16px cyan)
+          drop-shadow(0 0 32px cyan)
+          drop-shadow(0 0 48px blue);
+  transition: none;
+}
+
+/* 2) Размер и подсветка самого изображения */
+#start-btn img {
+  display: block;
+  width: 120px;     /* подбери под свой макет */
+  height: auto;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+/* 3) Эффект «glow» по-умолчанию */
+#start-btn img {
+  filter:
+    drop-shadow(0 0 8px rgba(0,255,255,0.6))
+    drop-shadow(0 0 16px rgba(0,200,255,0.4))
+    drop-shadow(0 0 24px rgba(0,150,255,0.2));
+}
+
+/* 4) При наведении — побольше glow и лёгкий зум */
+#start-btn:hover img {
+  transform: scale(1.1);
+  filter:
+    drop-shadow(0 0 12px rgba(0,255,255,0.8))
+    drop-shadow(0 0 24px rgba(0,200,255,0.6))
+    drop-shadow(0 0 36px rgba(0,150,255,0.4));
+}
+
+/* 5) При нажатии — небольшой «отскак» */
+#start-btn:active img {
+  transform: scale(0.95);
+}
+
+/* ——— Кнопка «Start» внизу экрана ——— */
+#start-btn {
+  position: fixed !important;
+  bottom: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  z-index: 9999 !important;
+}
+#start-btn img {
+  display: block !important;
+  width: 120px !important;
+  height: auto !important;
+  transition: filter 0.2s ease, transform 0.2s ease;
+  filter:
+    drop-shadow(0 0 8px rgba(0,255,255,0.6))
+    drop-shadow(0 0 16px rgba(0,200,255,0.4))
+    drop-shadow(0 0 24px rgba(0,150,255,0.2));
+}
+#start-btn:hover img {
+  transform: scale(1.1);
+  filter:
+    drop-shadow(0 0 12px rgba(0,255,255,0.8))
+    drop-shadow(0 0 24px rgba(0,200,255,0.6))
+    drop-shadow(0 0 36px rgba(0,150,255,0.4));
+}
+#start-btn:active img {
+  transform: scale(0.95);
+}
+/* чтобы фон не мешал, а видео всегда на заднем плане */
+body, html {
+  margin: 0; padding: 0;
+  width: 100%; height: 100%;
+    overflow-x: hidden; /* если вам нужно убрать только горизонтальный скролл */
+  overflow-y: auto;   /* включаем вертикальную прокрутку */
+  font-family: 'Poppins', sans-serif;
+}
+.full-bg, #bg-video {
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+/* затемнение фона за модалкой */
+#auth-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+/* сам контент */
+.auth-content {
+  width: 320px;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.6);      /* полупрозрачный чёрный */
+  backdrop-filter: blur(10px);         /* glass-эффект */
+  border-radius: 20px;                 /* скругление */
+  border: 1px solid rgba(255,255,255,0.2);  /* тонкая рамка */
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  color: #fff;
+}
+
+/* заголовок */
+.auth-content h2 {
+  margin: 0 0 1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1.75rem;
+  text-align: center;
+}
+
+/* inputs */
+.auth-content input {
+  width: 100%;
+  padding: 0.6em 0.8em;
+  margin-bottom: 0.75em;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+.auth-content input:focus {
+  outline: none;
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 6px rgba(0,255,255,0.5);
+}
+
+/* кнопка авторизации */
+.auth-content button {
+  width: 100%;
+  padding: 0.8em;
+  margin-top: 0.5em;
+  background: linear-gradient(135deg, #0ff, #0af);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  color: #000;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0,255,255,0.5);
+  transition: all 0.3s ease;
+}
+.auth-content button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+/* ссылка-переключатель регистрация/логин */
+#toggle-auth {
+  margin-top: 1rem;
+  text-align: center;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+#toggle-auth:hover {
+  color: #fff;
+}
+/* Секция карточек: делаем отзывчивую сетку */
+.power-cards {
+  display: grid;
+  /* 2 колонки на больших экранах, 1 на узких */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;          /* расстояние между карточками */
+  padding: 1rem;      /* отступы вокруг */
+  box-sizing: border-box;
+}
+
+/* Сами карточки: чтобы они были одного размера и красиво центрировали содержимое */
+.card {
+  background: rgba(0,0,0,0.6);
+  border-radius: 0.5rem;
+    overflow-x: hidden; /* если вам нужно убрать только горизонтальный скролл */
+  overflow-y: auto;   /* включаем вертикальную прокрутку */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.5rem;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+/* Легкий зум при наведении */
+.card:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Изображение в карточке */
+.card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Заголовок и подпись */
+.card-title {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+.card-sub {
+  margin-bottom: 0.5rem;
+  color: #ddd;
+}
+/* Ограничиваем ширину и центрируем всё содержимое */
+.container, 
+main#main-app {
+  max-width: 1280px;      /* или любую нужную вам максимальную ширину */
+  margin: 0 auto;         /* центрирование */
+  padding: 0 16px;        /* отступы по бокам на маленьких экранах */
+}
+
+/* Делаем адаптивную сетку из карточек */
+.power-cards {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,             /* сколько влезет */
+    minmax(240px, 1fr)    /* минимальная ширина 240px, максимум — поделить остаток */
+  );
+  gap: 16px;              /* расстояние между карточками */
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+}
+
+/* Подрезаем высоту изображений, чтобы карточки были ровнее */
+.card img {
+  width: 100%;
+  height: 180px;          /* фиксированная высота */
+  object-fit: cover;      /* обрезка по центру */
+}
+
+/* Опционально: уменьшаем размер заголовка и субтитров */
+.card-title {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+.card-sub {
+  font-size: 0.75rem;
+}
+
+/* Следим, чтобы шапка не съедала часть контента */
+main#main-app {
+  padding-top: 80px;      /* подгоните под высоту вашей шапки */
+}
+/* ——— wallet-panel.css ——— */
+
+/* 1) Цветовая палитра */
+:root {
+  --wallet-bg: rgba(10,14,32,0.95);
+  --wallet-border: #f1c40f;
+  --wallet-text: #fff;
+  --wallet-text-alt: rgba(255,255,255,0.6);
+  --wallet-radius: 8px;
+  --wallet-padding: 16px;
+  --wallet-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  --wallet-font: 'Poppins', sans-serif;
+}
+
+/* 2) Контейнер панели */
+.wallet-panel {
+  position: fixed;
+  top: 64px;
+  right: 16px;
+  width: 280px;
+  max-height: 75vh;
+  background: var(--wallet-bg);
+  border: 2px solid var(--wallet-border);
+  border-radius: var(--wallet-radius);
+  padding: var(--wallet-padding);
+  box-shadow: var(--wallet-shadow);
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;  /* прячем горизонтальный скролл */
+  overflow-y: auto;    /* включаем вертикальную прокрутку */
+  scrollbar-width: thin;
+  scrollbar-color: var(--wallet-border) transparent;
+  font-family: var(--wallet-font);
+  z-index: 1000;
+}
+
+.wallet-panel.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* 3) «Носик» панели */
+.wallet-panel__stick {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 16px; height: 8px;
+  background: var(--wallet-bg);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transform: translateX(-50%);
+}
+
+/* 4) Заголовок + поиск */
+.wallet-panel__header {
+  margin-bottom: 12px;
+}
+.wallet-panel__header input[type="search"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.05);
+  color: var(--wallet-text);
+  font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.wallet-panel__header input[type="search"]:focus {
+  outline: none;
+  border-color: var(--wallet-border);
+  box-shadow: 0 0 6px var(--wallet-border);
+}
+
+/* 5) Скрыть нулевой баланс */
+.wallet-panel__header label {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  color: var(--wallet-text-alt);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.wallet-panel__header label input {
+  margin-right: 6px;
+  accent-color: var(--wallet-border);
+}
+
+/* 6) Список монет */
+.wallet-panel__list {
+  flex: 1;
+  margin: 8px 0;
+}
+.wallet-panel__list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.9rem;
+  color: var(--wallet-text);
+  transition: background 0.2s;
+}
+.wallet-panel__list li:last-child {
+  border-bottom: none;
+}
+.wallet-panel__list li:hover {
+  background: rgba(241,196,15,0.1);
+}
+.wallet-panel__list .coin {
+  flex: 1;
+  font-weight: 500;
+}
+.wallet-panel__list .usd {
+  font-weight: 600;
+  color: var(--wallet-border);
+  margin-left: 8px;
+}
+
+/* 7) Подвал: общий баланс */
+.wallet-panel__footer {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--wallet-text);
+}
+
+/* 8) Стили скроллбара для WebKit */
+.wallet-panel::-webkit-scrollbar {
+  width: 8px;
+}
+.wallet-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+.wallet-panel::-webkit-scrollbar-thumb {
+  background-color: var(--wallet-border);
+  border-radius: 4px;
+}
+
+/* 9) Плавное появление кнопки WALLET */
+#wallet-btn {
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+#wallet-btn:hover {
+  transform: scale(1.1);
+  background: var(--wallet-border);
+  color: #000;
+}
+
+/* 10) Небольшая «оживлялка» при открытии */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.wallet-panel.show {
+  animation: slideIn 0.3s ease-out;
+}
+/* --- Сбрасываем прежний вид кнопки --- */
+#wallet-btn {
+  background: none;         /* убираем фон */
+  border: none;             /* убираем рамку */
+  padding: 0;               /* убираем паддинги */
+  cursor: pointer;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+}
+
+/* --- Стили для самого изображения --- */
+#wallet-btn img {
+  display: block;
+  width: 150px;      /* подберите нужную ширину */
+  height: auto;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  filter: drop-shadow(0 0 8px rgba(0,0,0,0.4));
+}
+
+/* --- Hover / Active эффекты --- */
+#wallet-btn:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 12px rgba(0,0,0,0.5));
+}
+#wallet-btn:active img {
+  transform: scale(0.95);
+}
+/* 1) Убираем весь старый фон/рамку/текст */
+#wallet-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+}
+
+/* 2) Стили для картинки внутри */
+#wallet-btn img {
+  display: block;
+  width: 140px;      /* подберите под свой дизайн */
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+/* 3) Hover / Active эффекты */
+#wallet-btn:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+#wallet-btn:active img {
+  transform: scale(0.95);
+}
+
+/* 4) Горизонтальный скролл и вертикальная прокрутка */
+body {
+  overflow-x: hidden; /* убрать горизонтальный скролл */
+  overflow-y: auto;   /* включить вертикальную прокрутку */
+}
+.wallet-panel {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.wallet-panel.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* === Кнопка WALLET === */
+#wallet-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1001;
+}
+#wallet-btn img {
+  display: block;
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+  transition: transform .2s ease, filter .2s ease;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
+#wallet-btn:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+}
+#wallet-btn:active img {
+  transform: scale(0.95);
+}
+
+
+/* === Сам оверлей-панель === */
+.wallet-panel {
+  position: fixed;
+  top: 72px;       /* ровно под кнопкой (16 + высота кнопки ~40 + отступ) */
+  right: 16px;
+  width: 280px;
+  background: rgba(0,0,0,0.8);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+  z-index: 1000;
+}
+.wallet-panel.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* «носик» панели */
+.wallet-panel__stick {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 16px;
+  height: 8px;
+  background: rgba(0,0,0,0.8);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transform: translateX(-50%);
+}
+
+/* Контент внутри */
+.wallet-panel__content {
+  padding: 12px;
+  color: #fff;
+}
+.wallet-panel__controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.wallet-panel__controls input[type="text"] {
+  flex: 1;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: var(--bg-start);
+  color: var(--text);
+}
+.wallet-panel__controls label {
+  display: flex;
+  align-items: center;
+  font-size: .9rem;
+}
+.wallet-panel__controls input[type="checkbox"] {
+  margin-right: 4px;
+}
+
+
+/* === Сетка иконок (по 2 в ряд) === */
+.wallet-icons {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 12px;
+}
+.wallet-icons li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.wallet-icons li:hover {
+  background: rgba(241,196,15,0.2);
+  transform: translateY(-2px);
+}
+.wallet-icons li img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+}
+.wallet-icons li span {
+  font-size: .85rem;
+  color: #fff;
+}
+
+
+/* === Остальной список === */
+.wallet-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+
+/* === Скроллы и body === */
+body {
+  overflow-x: hidden;  /* убирать горизонтальный скролл */
+  overflow-y: auto;    /* вертикальная прокрутка */
+}
+#wallet-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+}
+#wallet-btn img {
+  display: block;
+  width: 140px;       /* или ваш нужный размер */
+  height: auto;
+  transition: transform .2s, filter .2s;
+  filter: drop-shadow(0 0 6px #f1c40f);
+}
+#wallet-btn:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 10px #f1c40f);
+}
+#wallet-btn:active img {
+  transform: scale(0.95);
+}
+/* сетка иконок в панели Wallet */
+.wallet-icons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+  list-style: none;
+  margin: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.wallet-icons li {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background .2s;
+  padding: 0.25rem;
+  border-radius: 4px;
+}
+.wallet-icons li:hover {
+  background: rgba(255,255,255,0.05);
+}
+.wallet-icons img {
+  width: 24px; height: 24px;
+  margin-right: 0.5rem;
+}
+.wallet-icons span {
+  font-size: 0.9rem;
+  color: #fff;
+}
+/* 1) Контейнер-окно для карточек */
+.cards-window {
+  max-width: 790px;       /* ширина окна */
+  margin: 1.5rem auto;    /* центрируем по горизонтали и отступ сверху */
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0);
+  border-radius: 1px;
+  box-shadow: 0 4px 16px rgba(116, 116, 116, 0);
+}
+
+/* 2) Сетка карточек — 2 колонки */
+.power-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 колонки одинаковой ширины */
+  gap: 0.5rem;                              /* расстояние между карточками */
+}
+
+/* 3) Сами карточки — подгон по высоте, выравнивание */
+.card {
+  background: rgba(119, 119, 119, 0.418);
+  border-radius: 1px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s;
+  cursor: pointer;
+  /* чтобы все карточки в ряду были одинаковой высоты */
+  height: 100%;
+}
+
+/* Зум при наведении */
+.card:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Уменьшим подписи и отступы, чтобы всё выглядело компактнее */
+.card-title {
+  font-size: 1rem;
+  margin: 0.5rem 0 0.25rem;
+}
+.card-sub {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-bottom: 0.75rem;
+}
+/* пример селектора — замените на ваш реальный */
+.wallet-toggle, 
+.wallet-toggle * {
+  background-color: transparent !important; /* убираем жёлтый фон */
+  box-shadow: none       !important; /* если есть тень */
+}
+
+/* если кнопка при наведении/активном состоянии всё равно подсвечивается */
+.wallet-toggle:hover,
+.wallet-toggle:focus,
+.wallet-toggle:active {
+  background-color: transparent !important;
+  outline: none !important;
+}
+#wallet-btn-wrapper {
+  background: none !important;
+}
+/* ===== metrics cards ===== */
+.metrics-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.metric-card {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.metric-icon .icon {
+  width: 2rem;
+  height: 2rem;
+  fill: #00d8ff;
+}
+.metric-info {
+  margin-left: 0.75rem;
+}
+.metric-label {
+  font-size: 0.875rem;
+  color: #bbb;
+}
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+.metric-unit {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+/* ===== tabs ===== */
+.power-tabs .tab {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem;
+  cursor: pointer;
+  position: relative;
+}
+.power-tabs .tab.active {
+  color: #00d8ff;
+}
+.power-tabs .tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: linear-gradient(90deg, #00d8ff, #0070f3);
+  border-radius: 2px;
+}
+
+/* ===== exchange modal ===== */
+/* (можете оставить ваши стили или слегка доработать) */
+/* … */
+/* пример для #wallet-btn */
+#wallet-btn {
+  background: none !important;
+  box-shadow: none   !important;
+  border: none       !important;
+  /* остальные стили */
+}
+
+
+.wallet-panel {
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  width: 320px;
+  background: rgba(16, 24, 36, 0.98);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(12,28,52,0.36);
+  border: 2px solid #ffe066;
+  z-index: 1101;
+  display: none;
+  flex-direction: column;
+  padding: 20px 12px 12px 12px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.wallet-panel.show {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wallet-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.wallet-header input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #254aa5;
+  background: #182245;
+  color: #fff;
+  outline: none;
+  font-size: 15px;
+}
+
+.wallet-total {
+  font-weight: 600;
+  text-align: right;
+  margin-top: 10px;
+  color: #ffe066;
+  letter-spacing: 1px;
+}
+
+#wallet-list {
+  max-height: 230px;
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: #e4e8ff;
+  font-size: 15px;
+}
+
+#wallet-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(32,48,80,0.14);
+}
+.power-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 26px;
+  margin-top: 26px;
+  padding: 0 20px 40px 20px;
+}
+
+.card {
+  background: rgba(22,32,44,0.92);
+  border-radius: 20px;
+  box-shadow: 0 6px 28px #242d4640, 0 2px 8px #0ff2ff10;
+  padding: 18px 14px 13px 14px;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1.5px solid #22346c33;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.025);
+  box-shadow: 0 12px 36px #24f3ff34, 0 4px 12px #4ed2ff44;
+  border: 1.5px solid #45f6ff88;
+}
+
+.card img {
+  width: 120px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background: #212b48;
+  box-shadow: 0 2px 8px #0cf7ff18;
+}
+
+.card-title {
+  font-weight: 700;
+  color: #a9d6ff;
+  font-size: 19px;
+  text-align: center;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+
+.card-sub {
+  color: #19fff7;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2px;
+}
+.power-tabs {
+  display: flex;
+  justify-content: center;
+  margin: 36px 0 12px 0;
+  gap: 20px;
+}
+
+.tab {
+  background: linear-gradient(90deg, #2cc4ff 0%, #19fff7 100%);
+  color: #193b57;
+  border: none;
+  border-radius: 16px;
+  padding: 13px 54px;
+  font-size: 1.22em;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 0 5px;
+  box-shadow: 0 2px 10px #10cff920, 0 1.5px 4px #193b5736;
+  transition: background 0.17s, color 0.17s, box-shadow 0.17s;
+  outline: none;
+}
+
+.tab.active,
+.tab:focus {
+  background: linear-gradient(90deg, #ffe066 0%, #f7b018 100%);
+  color: #142042;
+  box-shadow: 0 4px 18px #ffd70022, 0 1.5px 10px #ffedab20;
+}
+/* пример селектора — замените на ваш реальный */
+.wallet-toggle, 
+.wallet-toggle * {
+  background-color: transparent !important; /* убираем жёлтый фон */
+  box-shadow: none       !important; /* если есть тень */
+}
+
+/* если кнопка при наведении/активном состоянии всё равно подсвечивается */
+.wallet-toggle:hover,
+.wallet-toggle:focus,
+.wallet-toggle:active {
+  background-color: transparent !important;
+  outline: none !important;
+}
+/* Сбрасываем фон и тень у обёртки кнопки */
+#wallet-btn-wrapper {
+  background: none !important;
+  box-shadow: none   !important;
+}
+
+/* Если жёлтый фон рисуется на вложённом .tab (или другом элементе),
+   найдите его класс/ID и аналогично обнулите фон */
+.tab {  
+  background: none !important;
+  box-shadow: none   !important;
+}
+/* обёртка панели кошелька */
+#wallet-container {
+  position: fixed;     /* чтобы при скролле оставался на месте */
+  top: 4rem;           /* опустили вниз от верха на 4rem — подвиньте по вкусу */
+  right: 1rem;         /* отступ от правого края */
+  z-index: 100;        /* поверх остального контента */
+  width: auto;         /* или задайте max-width */
+}
+
+/* сама кнопка “WALLET” */
+#wallet-btn-wrapper {
+  position: absolute;  /* относительно #wallet-container */
+  top: 0;              
+  right: 0;
+  padding: 0.5rem 1rem; /* подстройте отступы */
+}
+
+/* чтобы при открытии список не уезжал наверх */
+#wallet-container .wallet-dropdown {
+  margin-top: 2.5rem;  /* отступ под кнопкой, чтобы не накладывались */
+}
+@media (max-width: 768px) {
+  #wallet-container {
+    top: auto;          /* убираем верхний отступ */
+    bottom: 0;          /* приклеиваем к низу */
+    right: 0; 
+    left: 0;            /* растягиваем на всю ширину */
+    width: 100%;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+  }
+
+  #wallet-btn-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* можно скрыть текст и оставить иконку */
+  #wallet-btn-wrapper .text-label {
+    display: none;
+  }
+}
+#wallet-btn {
+  position: fixed;
+  top: 130px;    /* сдвинули вниз, подгоните под ваш макет */
+  right: 0%;
+  z-index: 9000;
+}
+
+/* 1) Сбрасываем фон/тень у кнопки WALLET */
+#wallet-btn {
+  background: none !important;
+  box-shadow: none   !important;
+  border: none       !important;
+  /* фиксируем позицию и сдвигаем вниз */
+  position: fixed;
+  top: 130px;    /* подгоните это значение под своё расположение */
+  right: 16px;
+  z-index: 1000;
+}
+
+/* 2) Сдвигаем сам оверлей-панель кошелька */
+.wallet-panel {
+  /* если у вас другой селектор — поменяйте .wallet-panel на нужный */
+  position: fixed;   /* чтобы не сбивалось при скролле */
+  top: 280px !important;  /* примерно кнопка (130px) + её высота (около 40px) */
+  right: 16px !important;
+  /* остальные ваши стили панели при этом останутся нетронутыми */
+}
+
+/* === Карточки === */
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--accent);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    inset 0 0 10px rgba(0, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card img {
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow:
+    0 8px 30px rgba(0, 255, 255, 0.2),
+    inset 0 0 15px rgba(0, 255, 255, 0.2);
+}
+.card:hover img {
+  transform: scale(1.05);
+}
+
+/* Заголовок и субтитры в карточках */
+.card-title {
+  color: var(--text);
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.3);
+}
+.card-sub {
+  color: var(--accent-2);
+}
+
+/* === Панель WALLET === */
+.wallet-panel {
+  background: var(--bg-wallet);
+  backdrop-filter: blur(12px);
+  border: 2px solid var(--accent-2);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.7),
+    inset 0 0 20px rgba(0, 255, 255, 0.1);
+  border-radius: 1rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+/* небольшой «носик» */
+.wallet-panel__stick {
+  background: var(--bg-wallet);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  box-shadow: inset 0 0 6px rgba(0, 255, 255, 0.1);
+}
+/* заголовок и поиск */
+.wallet-panel__content h2 {
+  color: var(--accent-2);
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.3);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+.wallet-panel__header input[type="search"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0.5rem;
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.wallet-panel__header input[type="search"]:focus {
+  outline: none;
+  border-color: var(--accent-2);
+  box-shadow: 0 0 8px var(--accent-2);
+}
+
+/* строки списка */
+.wallet-panel__list li {
+  transition: background 0.2s;
+}
+.wallet-panel__list li:hover {
+  background: rgba(0, 255, 255, 0.05);
+}
+
+/* общий баланс внизу */
+.wallet-panel__footer {
+  color: var(--text);
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0.75rem;
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0);
+}
+
+/* === Кнопка WALLET === */
+#wallet-btn {
+  background: none !important;
+  box-shadow: none   !important;
+  border: 2px solid var(--accent-2) !important;
+  color: var(--text) !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.75rem !important;
+  font-weight: bold !important;
+  text-shadow: 0 0 4px var(--accent-2) !important;
+  position: fixed !important;
+  top: 130px !important;
+  right: 16px !important;
+  z-index: 1000 !important;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+#wallet-btn:hover {
+  background: var(--accent-2) !important;
+  color: #000 !important;
+  box-shadow: 0 0 12px var(--accent-2) !important;
+  transform: scale(1.05) !important;
+}
+/* === Admin Panel === */
+#admin-panel {
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--accent);
+  border-radius: .75rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+#admin-coin-list .admin-coin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: .5rem 0;
+  padding: .5rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: .5rem;
+}
+
+#admin-coin-list .admin-coin input {
+  width: 4rem;
+  margin-left: .5rem;
+  padding: .25rem;
+  border-radius: .25rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+  color: var(--text);
+}
+/* ——— полный экран + масштаб + вращение ——— */
+.card.fullscreen {
+  position: fixed;
+  top: 50%; left: 50%;
+  width: 80vw;
+  height: auto;
+  max-height: 80vh;
+  transform-origin: center center;
+  animation: growRotate 0.8s ease-out forwards;
+  z-index: 2000;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+
+/* паддинг, чтобы не съезжал фон */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* keyframes для выезда */
+@keyframes growRotate {
+  from {
+    transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+/* toast */
+.custom-toast {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  background: rgba(0,0,0,0.8);
+  color: #0ff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-family: sans-serif;
+  font-size: 14px;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  z-index: 3000;
+}
+.custom-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.fullscreen-img {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 520px;
+  height: 520px;
+  z-index: 9001;
+  border-radius: 30px;
+  box-shadow: 0 0 88px #09f3ffcc, 0 8px 44px #11162a99;
+  background: #16203b;
+  object-fit: contain;
+  transform: translate(-50%, -50%) scale(0.5) rotate(-13deg);
+  animation: popImg .5s cubic-bezier(.48,1.7,.64,1) forwards;
+  cursor: pointer;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+@keyframes popImg {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.18) rotate(35deg); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1.00) rotate(0deg);}
+}
+.fullscreen-img:hover {
+  box-shadow: 0 0 160px #12e4ffdd, 0 8px 68px #03050caa;
+  transform: translate(-50%, -50%) scale(1.08) rotate(2deg);
+}
+.card {
+  width: 300px;
+  height: 260px;
+  background: rgba(20, 40, 60, 0.33);
+  border-radius: 28px;
+  border: 2px solid #e5cb56;
+  box-shadow: 0 6px 32px 0 rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: transform .12s cubic-bezier(.23,1.14,.82,1.17);
+  cursor: pointer;
+  position: relative;
+  backdrop-filter: blur(7px);
+  /* background-clip: padding-box;  // если вдруг фон растекается */
+}
+.card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  margin-top: 28px;
+  object-fit: cover;
+  background: transparent;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.22);
+}
+.card-title {
+  font-size: 1.35rem;
+  font-weight: bold;
+  margin: 15px 0 6px 0;
+  text-align: center;
+  color: #fff;
+}
+
+.card-sub {
+  font-size: 1.05rem;
+  color: #d5d2cc;
+  margin-bottom: 12px;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .card {
+    width: 95vw;
+    max-width: 360px;
+    height: 220px;
+  }
+}
+.special-wrap {
+  background: rgba(15,23,42,0.7);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  padding: 32px 24px;
+  max-width: 340px;
+  margin: 50px auto 0 auto;
+  text-align: center;
+  color: #fff;
+  font-family: inherit;
+}
+#sp-chp-input {
+  border-radius: 7px;
+  border: 1px solid #333;
+  background: #191c22;
+  color: #fff;
+}
+#sp-exchange-btn {
+  border-radius: 7px;
+  background: #5af59a;
+  border: none;
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#sp-exchange-btn:hover {
+  background: #40d47e;
+}
+.special-section {
+  background: rgba(12,18,33,0.9);
+  border-radius: 16px;
+  box-shadow: 0 0 30px 5px rgba(0,0,0,0.3);
+  padding: 30px;
+  margin: 40px auto 0 auto;
+  max-width: 400px;
+  text-align: center;
+}
+.special-section h2 { margin-bottom: 20px; color: #00eaff; }
+#sp-result { margin-top: 12px; font-weight: bold; color: #0f0; }
+/* ------------------------------------------------------------
+   1) Фоновое видео «fon.mp4» — как было у вас:
+------------------------------------------------------------ */
+.full-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* ------------------------------------------------------------
+   2) Видео-логотип поверх всего с прозрачным фоном:
+------------------------------------------------------------ */
+#logo-animation-video {
+  position: fixed;      /* фиксируется относительно окна браузера */
+  top: 0;               /* вправо-верх */
+  right: 0;
+  width: 180px;         /* можете подогнать ширину (например, 12vw или 200px) */
+  height: auto;         /* сохраняем пропорции */
+  pointer-events: none; /* клики «проскакивают» сквозь видео */
+  z-index: 9999;        /* поверх всех остальных элементов */
+  background: transparent; 
+  mix-blend-mode: normal; /* здесь можно поменять blend-mode, если нужно подсветить под цвет фона */
+}
+
+/* Если хотите мягко «выплывать» логотип: (опционально) */
+@keyframes fadeInLogo {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+#logo-animation-video {
+  opacity: 0;
+  animation: fadeInLogo 0.8s ease-in-out forwards 0.2s;
+}
+
+/* ------------------------------------------------------------
+   3) Остальные стили вашего интерфейса (примерные)
+   Ваши .metrics-container, .power-tabs, .wallet-panel и т. д.
+------------------------------------------------------------ */
+
+/* Пример контейнера с карточками метрик */
+.metrics-container {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+}
+
+/* Стили для вкладок Mining/Special */
+.power-tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.power-tabs .tab {
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: #00eaff;
+  padding: 10px 20px;
+  margin: 0 8px;
+  cursor: pointer;
+  font-size: 18px;
+}
+.power-tabs .tab.active {
+  border-bottom: 2px solid #00eaff;
+}
+
+/* Окно WALLET */
+.wallet-panel {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  width: 280px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  display: none; /* показывается/скрывается из JS */
+  z-index: 500;  /* < 9999, чтобы видео-лого было над ним */
+}
+.wallet-panel .wallet-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.wallet-panel .wallet-header input {
+  flex-grow: 1;
+  margin-right: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+.wallet-panel ul {
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.wallet-panel ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.wallet-panel .wallet-total {
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: right;
+}
+
+/* Стили секции «Обмен CHP→TRX» */
+.special-section {
+  background: rgba(0,0,0,0.6);
+  padding: 16px;
+  border-radius: 6px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 16px;
+  z-index: 400; /* < 9999, чтобы лoгo-видео оставалось поверх */
+}
+.special-section h2 {
+  margin-top: 0;
+  color: #00eaff;
+}
+.special-section input,
+.special-section button {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+}
+.special-section button {
+  background-color: #00eaff;
+  color: #000;
+  cursor: pointer;
+}
+#chprotokol-logo {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 90px;
+  height: auto;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.95;
+
+  /* Светящийся эффект */
+  filter: drop-shadow(0 0 8px #00fff7) brightness(1.3) saturate(1.2);
+
+  /* Мягкая анимация */
+  animation: floatGlow 4s ease-in-out infinite;
+  transition: transform 0.4s ease;
+}
+
+/* Анимация "парения" и пульсации */
+@keyframes floatGlow {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(-5px) scale(1.03);
+    opacity: 1;
+  }
+}
+.chp-logo {
+  width: 100px;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle; /* <-- ВЫРАВНИВАНИЕ */
+  transform: translateY(-2px); /* Чуть выше — можешь поиграться со значением */
+  margin-right: 6px;
+  filter: drop-shadow(0 0 8px #0ff);
+  animation: chpPulse 3s ease-in-out infinite;
+}
+
+@keyframes chpPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px #0ff);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 14px #0ff);
+  }
+}
+
+@keyframes chpPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px #00eaff) drop-shadow(0 0 16px #00eaff80) brightness(1.08);
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 20px #00eaff) drop-shadow(0 0 32px #00eaffaa) brightness(1.2);
+    transform: scale(1.07);
+  }
+}
+/* -------------------------------------------------
+   500+ строк ваших общих стилей выше...
+   -------------------------------------------------
+*/
+
+/* ========== Секция «Скачать APK» ========== */
+.download-app-section {
+  position: relative;
+  z-index: 1; /* ниже модальных окон, но выше фоновых эффектов */
+  padding: 40px 20px;
+  margin-top: 60px; /* Отступ сверху, чтобы не сливалось с контентом */
+  display: flex;
+  justify-content: center;
+}
+
+.download-app-container {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  background: rgba(0, 30, 60, 0.85); /* полу-прозрачный тёмно-синий фон */
+  border: 2px solid #0cf; /* неоновая бирюзовая рамка */
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 204, 255, 0.4), 0 0 40px rgba(0, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 30px 30px 40px;
+  overflow: hidden;
+}
+
+.download-app-title {
+  font-size: 2.4rem;
+  color: #0cf;
+  text-align: center;
+  margin-bottom: 16px;
+  text-shadow:
+    0 0 8px rgba(0, 204, 255, 0.6),
+    0 0 16px rgba(0, 255, 255, 0.4);
+}
+
+.download-app-text {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.87);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.download-app-text strong {
+  color: #ffffff;
+  text-shadow: 0 0 4px rgba(255,255,255,0.7);
+}
+
+.download-app-button {
+  display: inline-block;
+  width: 200px;
+  margin: 0 auto 16px;
+  padding: 12px 0;
+  background: linear-gradient(90deg, #00ffef 0%, #00c0ff 100%);
+  color: #001f3f;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow:
+    0 0 8px rgba(0, 255, 239, 0.6),
+    0 0 16px rgba(0, 192, 255, 0.4);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.download-app-button:hover {
+  box-shadow:
+    0 0 12px rgba(0, 255, 239, 0.8),
+    0 0 24px rgba(0, 192, 255, 0.6);
+  transform: scale(1.03);
+}
+
+.download-app-note {
+  font-size: 0.9rem;
+  color: rgba(180, 180, 180, 0.85);
+  text-align: center;
+  margin-top: 8px;
+}
+
+.download-app-version {
+  color: #0cf;
+  font-weight: bold;
+}
+
+/* ========== Анимация лёгкого свечения рамки ========== */
+@keyframes neonGlow {
+  0% {
+    box-shadow:
+      0 0 12px rgba(0, 255, 239, 0.4),
+      0 0 24px rgba(0, 192, 255, 0.3);
+    border-color: #00eaff;
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba(0, 255, 239, 0.6),
+      0 0 40px rgba(0, 192, 255, 0.5);
+    border-color: #00c0ff;
+  }
+  100% {
+    box-shadow:
+      0 0 12px rgba(0, 255, 239, 0.4),
+      0 0 24px rgba(0, 192, 255, 0.3);
+    border-color: #00eaff;
+  }
+}
+
+.download-app-container {
+  animation: neonGlow 3s ease-in-out infinite;
+}
+
+/* -------------------------------------------------
+   Задача «Скачать APK» завершена! 
+   ------------ конец стилей -------------
+   ------------------------------------------------- */
+/* ==========  FIXED-MODAL-STYLES  ========== */
+/* Убедитесь, что этот кусок лежит строго в самом конце style.css */
+
+/* 1) Основной контейнер модального окна */
+.exchange-modal {
+  display: none;                   /* прячем по умолчанию */
+  position: fixed !important;      /* фиксируем над всем содержимым */
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;         /* растягиваем на всю ширину окна */
+  height: 100vh !important;        /* растягиваем на всю высоту окна */
+  z-index: 9999 !important;        /* самое «большое» значение */
+  pointer-events: none;            /* изначально клики «не летают» по модалке */
+}
+
+/* Когда нужно открыть, добавляем класс .show, чтобы появились кликабельность и фон */
+.exchange-modal.show {
+  display: block;                  /* показываем окно */
+  pointer-events: auto;            /* теперь внутри него клики работают */
+}
+
+/* 2) Полупрозрачный фон (бекдроп) */
+.exchange-modal__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* 3) Вёрстка контента (центруем по середине экрана) */
+.exchange-modal__content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 380px;
+  background: #111f35;
+  border: 2px solid #0cf;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow:
+    0 0 16px rgba(0, 255, 239, 0.4),
+    0 0 32px rgba(0, 192, 255, 0.3);
+  color: #fff;
+  pointer-events: auto;
+}
+
+/* 4) Кнопка закрытия в правом верхнем углу */
+.exchange-modal__close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #0cf;
+  cursor: pointer;
+}
+
+/* 5) Заголовок окна */
+.exchange-modal__content h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  text-align: center;
+  color: #0cf;
+}
+
+/* 6) Форма (инпут, текст-результат, кнопка) */
+.exchange-modal__form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+.exchange-modal__form input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 2px solid #0cf;
+  border-radius: 6px;
+  background: rgba(0, 30, 60, 0.8);
+  color: #fff;
+}
+
+.exchange-modal__form input::placeholder {
+  color: rgba(200, 200, 200, 0.7);
+}
+
+.exchange-modal__live {
+  font-size: 0.95rem;
+  color: #0cf;
+}
+
+.exchange-modal__form .button {
+  padding: 10px 0;
+  background: linear-gradient(90deg, #00ffef 0%, #00c0ff 100%);
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  color: #001f3f;
+  cursor: pointer;
+  box-shadow:
+    0 0 8px rgba(0, 255, 239, 0.6),
+    0 0 16px rgba(0, 192, 255, 0.4);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.exchange-modal__form .button:hover {
+  box-shadow:
+    0 0 12px rgba(0, 255, 239, 0.8),
+    0 0 24px rgba(0, 192, 255, 0.6);
+  transform: scale(1.02);
+}
+/* ==========  END FIXED-MODAL-STYLES  ========== */
+/* =================================================================== */
+/*  БЛОК FIXED-POSITION СТИЛЕЙ ДЛЯ exchange-modal — КОНЕЦ ФАЙЛА     */
+/* =================================================================== */
+
+/* 1) Основной контейнер (по умолчанию скрыт) */
+.exchange-modal {
+  display: none;                   /* пока нет .show, прячем */
+  position: fixed !important;      /* фиксируем к окну браузера */
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;         /* полная ширина */
+  height: 100vh !important;        /* полная высота */
+  z-index: 9999 !important;        /* поверх всего */
+  pointer-events: none;            /* пока скрыт, клики «мимо» */
+}
+
+/* 2) Когда нужно показать — добавляем .show */
+.exchange-modal.show {
+  display: block;                  /* отображаем */
+  pointer-events: auto;            /* клики внутри модалки работают */
+}
+
+/* 3) Полупрозрачный бэкдроп */
+.exchange-modal__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* 4) Содержимое модалки — по центру экрана */
+.exchange-modal__content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 380px;
+  background: #111f35;
+  border: 2px solid #00ffff;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow:
+    0 0 16px rgba(0, 255, 239, 0.4),
+    0 0 32px rgba(0, 192, 255, 0.3);
+  color: #ffffff;
+  pointer-events: auto;
+  z-index: 10000; /* чуть выше бэкдропа, но ниже самого модального контейнера */
+}
+
+/* 5) Кнопка “×” (закрыть) */
+.exchange-modal__close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #00ffff;
+  cursor: pointer;
+  z-index: 10001; /* чтобы крестик всегда был выше контента */
+}
+
+/* 6) Заголовок модалки */
+.exchange-modal__content h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  text-align: center;
+  color: #00ffff;
+}
+
+/* 7) Форма (input + текст + кнопка) */
+.exchange-modal__form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+.exchange-modal__form input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 2px solid #00ffff;
+  border-radius: 6px;
+  background: rgba(0, 30, 60, 0.8);
+  color: #ffffff;
+}
+
+.exchange-modal__form input::placeholder {
+  color: rgba(200, 200, 200, 0.7);
+}
+
+.exchange-modal__live {
+  font-size: 0.95rem;
+  color: #00ffff;
+}
+
+.exchange-modal__form .button {
+  padding: 10px 0;
+  background: linear-gradient(90deg, #00ffef 0%, #00c0ff 100%);
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  color: #001f3f;
+  cursor: pointer;
+  box-shadow:
+    0 0 8px rgba(0, 255, 239, 0.6),
+    0 0 16px rgba(0, 192, 255, 0.4);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.exchange-modal__form .button:hover {
+  box-shadow:
+    0 0 12px rgba(0, 255, 239, 0.8),
+    0 0 24px rgba(0, 192, 255, 0.6);
+  transform: scale(1.02);
+}
+
+/* =================================================================== */
+/*  Конец блока FIXED-POSITION СТИЛЕЙ                               */
+/* =================================================================== */
+/* ================================
+   Стили для окна «Обмен CHP на TRX»
+   ================================ */
+
+/* Сам контейнер секции обмена */
+#exchange-section {
+  /* Располагаем блок по центру под основным контентом */
+  position: relative;         /* чтобы он шёл по потоку документа */
+  margin: 40px auto 60px;     /* отступ сверху 40px, по центру, снизу 60px */
+  width: 360px;               /* фиксированная ширина, подберите под дизайн */
+  background: rgba(10, 15, 43, 0.90); /* тёмно-синий / полупрозрачный фон */
+  border-radius: 8px;         /* скруглённые углы */
+  padding: 20px;              /* внутренний отступ */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6); /* лёгкая тень для «парящего» эффекта */
+  color: #fff;                /* белый цвет основного текста */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 1;                 /* чтобы не перекрывался фоном страницы */
+}
+
+/* Внутренний контейнер (чтобы было проще выравнивать) */
+#exchange-section .exchange-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Заголовок секции */
+#exchange-section h2 {
+  font-size: 22px;
+  color: #0ff;       /* бирюзово-голубой акцент */
+  margin-bottom: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Баланс CHP (показываем цифру) */
+#exchange-section span {
+  font-size: 14px;
+  margin-bottom: 8px;
+  width: 100%;
+  text-align: left;
+  line-height: 1.4;
+  color: #ddd;
+}
+
+/* Поле ввода суммы для обмена */
+#exchange-section input#sp-chp-amount {
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 16px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  outline: none;
+  transition: background-color 0.2s ease-in-out;
+}
+#exchange-section input#sp-chp-amount:focus {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Кнопка «Обменять» */
+#exchange-section button#sp-exchange-btn {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #0ff;  /* яркий бирюзовый */
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  margin-bottom: 10px;
+}
+#exchange-section button#sp-exchange-btn:hover {
+  background-color: #22ffff;
+  transform: translateY(-1px);
+}
+#exchange-section button#sp-exchange-btn:active {
+  transform: translateY(1px);
+}
+
+/* Блок для результата (сообщение об ошибке/успехе) */
+#exchange-section #sp-result {
+  font-size: 14px;
+  min-height: 18px;         /* резервируем место, чтобы контент не «прыгнул» */
+  margin-bottom: 10px;
+  text-align: center;
+  color: #0f0;              /* зелёный цвет для успешного сообщения */
+  /* Если нужно красным при ошибке, можно в JS менять класс или цвет */
+}
+
+/* Отдельный span для TRX-баланса */
+#exchange-section span#sp-trx {
+  font-size: 14px;
+  margin-top: 6px;
+  width: 100%;
+  text-align: left;
+  color: #ddd;
+}
+
+/* Если хотите изначально скрывать окно через CSS, раскомментируйте следующую строку */
+/* #exchange-section { display: none; } */
+/* --------------------------------------------------------------------------
+   1. Делам exchange-modal обычным inline-блоком, а не fullscreen-overlay
+   -------------------------------------------------------------------------- */
+.exchange-modal {
+  display: none;           /*  скрыто по умолчанию */
+  position: relative;       /*  теперь просто вписано в поток страницы */
+  margin: 0 auto 40px;      /*  по центру страницы с отступом снизу */
+  width: 360px;             /*  фиксированная (или адаптивная) ширина */
+  background: rgba(10,15,43,0.90);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 1;               /*  чтобы не перекрывать важные элементы */
+}
+
+/* После добавления класса .show наш блок станет видим */
+.exchange-modal.show {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   2. Внутри выводим форму обмена
+   -------------------------------------------------------------------------- */
+.exchange-modal__content {
+  position: relative;      /*  свой контент без абсолютного позиционирования */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.exchange-modal__close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #00ffff;
+  cursor: pointer;
+}
+
+/* Простая заголовок‐форма */
+.exchange-modal__content h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.3rem;
+  text-align: center;
+  color: #00ffff;
+}
+
+/* Форма ввода */
+.exchange-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+.exchange-modal__form span {
+  display: block;
+  font-size: 14px;
+  color: #ddd;
+}
+
+.exchange-modal__form input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 2px solid #00ffff;
+  border-radius: 6px;
+  background: rgba(0,30,60,0.8);
+  color: #fff;
+  outline: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.exchange-modal__form input::placeholder {
+  color: rgba(200,200,200,0.7);
+}
+
+.exchange-modal__form input:focus {
+  background: rgba(255,255,255,0.2);
+}
+
+.exchange-modal__form .button {
+  padding: 10px 0;
+  background: linear-gradient(90deg, #00ffef 0%, #00c0ff 100%);
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  color: #001f3f;
+  cursor: pointer;
+  box-shadow:
+    0 0 8px rgba(0,255,239,0.6),
+    0 0 16px rgba(0,192,255,0.4);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.exchange-modal__form .button:hover {
+  box-shadow:
+    0 0 12px rgba(0,255,239,0.8),
+    0 0 24px rgba(0,192,255,0.6);
+  transform: scale(1.02);
+}
+
+.exchange-modal__live {
+  font-size: 0.95rem;
+  color: #0f0;   /* зелёный для результата */
+}
+
+/* --------------------------------------------------------------------------
+   3. Убираем фон-бекдроп, так как он больше не нужен
+   -------------------------------------------------------------------------- */
+.exchange-modal__backdrop {
+  display: none;
+}
+/* ========================= */
+/* 1) Стили для нового блока Download Android APK */
+/* ========================= */
+
+.inline-download {
+  margin: 24px auto;              /* небольшой отступ сверху и снизу */
+  max-width: 600px;               /* ограничиваем ширину (по желанию) */
+  display: flex;                  /* логотип + текст в одну строку */
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6); /* полупрозрачный тёмный фон */
+  border-radius: 8px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.download-logo {
+  width: 64px;       /* размер логотипа Android */
+  height: 64px;
+  object-fit: contain;
+  margin-right: 16px;
+}
+
+.download-text {
+  flex: 1;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.download-text p {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}

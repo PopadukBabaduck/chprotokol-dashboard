@@ -1,0 +1,34 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login / Register</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <video class="full-bg" autoplay muted loop playsinline>
+    <source src="landing-bg.mp4" type="video/mp4">
+  </video>
+
+  <div id="auth-modal">
+    <div class="auth-content">
+      <h2 id="auth-title">Login</h2>
+      <input id="login-input"    placeholder="Username">
+      <input id="pass-input"     placeholder="Password" type="password">
+      <div id="referral-container" class="hidden">
+        <input id="ref-input"    placeholder="Referral Code">
+      </div>
+      <button id="submit-auth">Login</button>
+      <p id="toggle-auth">Register</p>
+      <p id="auth-error" class="error"></p>
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #0f1b2a;
+  color: #fff;
+  padding: 1rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+th, td {
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.5rem;
+  text-align: left;
+}
+th {
+  background: rgba(241,196,15,0.2);
+}
+input[type="number"],
+input[type="text"] {
+  width: 100%;
+  padding: 0.25rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+}
+#save-btn {
+  padding: 0.5rem 1rem;
+  background: #f1c40f;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+}
+#save-btn:hover { opacity: 0.9; }

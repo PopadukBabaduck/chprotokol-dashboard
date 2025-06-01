@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Landing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <video class="full-bg" autoplay muted loop playsinline>
+    <source src="landing-bg.mp4" type="video/mp4">
+  </video>
+
+  <button id="start-btn">
+    <img src="start-btn.png" alt="Start">
+  </button>
+
+  <script>
+    document.getElementById('start-btn').onclick = () => {
+      location.href = 'login.html';
+    };
+  </script>
+</body>
+</html>

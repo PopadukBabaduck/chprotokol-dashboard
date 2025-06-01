@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <script>
+    // Защита: если не залогинен — переадресовываем на login.html
+    if (!localStorage.getItem('loggedInUser')) {
+      location.replace('login.html');
+    }
+  </script>
+
+  <!-- Основное фоновое видео и частицы -->
+  <video class="full-bg" autoplay muted loop playsinline>
+    <source src="fon.mp4" type="video/mp4">
+  </video>
+  <div id="particles-js"></div>
+
+  <!-- Кнопка WALLET (справа сверху) -->
+  <button id="wallet-btn">
+    <img src="new-wallet.png" alt="Wallet" />
+  </button>
+
+  <!-- Главная область: Metrics + вкладки + карточки -->
+  <main id="main-app" class="hidden">
+    <!-- Метрики: Balance / Power / Speed -->
+    <div id="metrics-container" class="metrics-container"></div>
+
+    <!-- Вкладки Mining / Special -->
+    <div class="power-tabs">
+      <button id="mining-tab" class="tab active">Mining</button>
+      <button id="special-tab" class="tab">Special</button>
+    </div>
+
+    <!-- Блок с карточками (рендерятся через renderCards()) -->
+    <div class="cards-window">
+      <div class="power-cards"></div>
+    </div>
+
+
+  </main>
+
+  <!-- Боковая панель Special (скрыта по умолчанию, выезжает слева) -->
+  <div class="special-section">
+    <div class="special-wrap">
+      <div class="special-title">Обмен CHP на TRX</div>
+      <div class="special-balance">
+        Ваш баланс CHP: <b id="sp-chp-bal">0.000000</b>
+      </div>
+      <div class="special-input-row">
+        <input id="sp-chp-amount" type="number" min="0" step="0.000001" placeholder="Сколько обменять?">
+        <button id="sp-exchange-btn" class="special-btn">Обменять</button>
+      </div>
+      <div id="sp-result" class="special-result"></div>
+      <div class="special-balance" style="margin-top:16px;">
+        Ваш TRX баланс: <b id="sp-trx-bal">0.000000</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Боковая панель Wallet (справа) -->
+  <div id="wallet-panel" class="wallet-panel">
+    <div class="wallet-header">
+      <input id="wallet-search" placeholder="Search coin…">
+      <label><input id="hide-zero-checkbox" type="checkbox"> Hide zero</label>
+    </div>
+    <ul id="wallet-list"></ul>
+    <div class="wallet-total">
+      Total: <span id="wallet-total">0 USD</span>
+    </div>
+  </div>
+
+
+  <!-- Подключаем JS-скрипты -->
+  <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.3/dist/vanilla-tilt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
