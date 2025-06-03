@@ -1,6 +1,18 @@
 // login.js
 document.addEventListener('DOMContentLoaded', () => {
-  const ALLOWED_REFS = ['CODE1','CODE2','CODE3']; // ваши реферальные коды
+const ALLOWED_REFS = [
+  'GALAXY10',
+  'NEBULAX',
+  'HYPER5',
+  'QUANTUM7',
+  'PHOENIX3',
+  'ECLIPSE8',
+  'COSMIC0',
+  'ORION66',
+  'LUNAR42',
+  'SOLAR99'
+]
+
   const toggleAuth   = document.getElementById('toggle-auth');
   const authTitle    = document.getElementById('auth-title');
   const submitBtn    = document.getElementById('submit-auth');
@@ -44,13 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let   p = inpPass.value.trim();
     const r = inpRef.value.trim();
 
-    if (!u) { errEl.textContent = 'Введите username'; return; }
-    if (!p) { errEl.textContent = 'Введите password'; return; }
+    if (!u) { errEl.textContent = 'Enter username'; return; }
+    if (!p) { errEl.textContent = 'Enter password'; return; }
 
     if (isRegister) {
       // проверяем referral
       if (!ALLOWED_REFS.includes(r)) {
-        errEl.textContent = 'Неверный referral code';
+        errEl.textContent = 'Invalid referral code';
         return;
       }
       // сохраняем нового пользователя
@@ -59,13 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
       // теперь авто-подставляем и переключаем на Login
       inpPass.value = p;
       toggleAuth.click();
-      errEl.textContent = '✅ Зарегистрированы! Теперь войдите.';
+      errEl.textContent = '✅ Registered! Now log in.';
       return;
     }
 
     // Login
     if (!users[u] || users[u].password !== p) {
-      errEl.textContent = 'Неверное имя или пароль';
+      errEl.textContent = 'Invalid username or password';
       return;
     }
 

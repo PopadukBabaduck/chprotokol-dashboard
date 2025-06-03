@@ -945,94 +945,12 @@ html, body {
 .download-btn:hover {
   background: #e0ac0f;
 }
-.special-section { color: #fff; padding: 1em; }
-.special-section .exchange input { width: 60%; padding: .5em; margin-right: .5em; }
-/* ========= СПЕЦИАЛЬНЫЙ БЛОК ========= */
-.special-section {
-  
-  color: #ffffff;
-  padding: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  animation: fadeIn 0.6s ease-out;
-}
-
-.special-section h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Обмен TON→TRX */
-.special-section .exchange {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-
-.special-section .exchange input {
-  width: 200px;
-  padding: 0.5rem;
-  border: 2px solid #444;
-  border-radius: 0.3rem;
-  background: #1a1f33;
-  color: #fff;
-  transition: border-color 0.2s;
-}
-.special-section .exchange input:focus {
-  outline: none;
-  border-color: #f1c40f;
-}
 
 /* Кнопки общего стиля */
 .button.accent,
 .get-reward-btn,
 #exchange-btn,
-.special-section a.button {
-  background: #f1c40f;
-  color: #1a1f33;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-radius: 0.3rem;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.button.accent:hover,
-.get-reward-btn:hover,
-#exchange-btn:hover,
-.special-section a.button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(241,196,15,0.4);
-}
 
-/* Описание приложения */
-.special-section .app-info p {
-  max-width: 600px;
-  margin: 0.5rem auto 1.5rem;
-  line-height: 1.4;
-  font-size: 0.95rem;
-  opacity: 0.9;
-}
-
-/* Анимация появления */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0);    }
-}
-/* ==== Специальные ==== */
-.special-section {
-  max-width: 800px;
-  margin: 2rem auto;
-  color: #fff;
-  animation: fadeIn 0.5s ease-out;
-}
 .exchange-wrapper {
   display: flex;
   align-items: center;
@@ -3430,23 +3348,7 @@ body.no-scroll {
   font-size: 16px;
   z-index: 400; /* < 9999, чтобы лoгo-видео оставалось поверх */
 }
-.special-section h2 {
-  margin-top: 0;
-  color: #00eaff;
-}
-.special-section input,
-.special-section button {
-  margin-top: 8px;
-  padding: 6px 10px;
-  border-radius: 4px;
-  border: none;
-  font-size: 14px;
-}
-.special-section button {
-  background-color: #00eaff;
-  color: #000;
-  cursor: pointer;
-}
+
 #chprotokol-logo {
   position: fixed;
   top: 16px;
@@ -4125,4 +4027,352 @@ body.no-scroll {
   margin: 0 0 8px 0;
   font-size: 1rem;
   line-height: 1.4;
+}
+.download-apk-section {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  border: 2px solid #00eaff;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 234, 255, 0.3);
+}
+
+.download-apk-section h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #00eaff;
+}
+
+.download-apk-section p {
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.download-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 18px;
+  color: #000;
+  background-color: #00eaff;
+  border-radius: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+  background-color: #00c6d1;
+}
+/* ============================= */
+/* Стили для модального окна «Coming Soon» */
+/* ============================= */
+
+/* 1) Контейнер во весь экран, скрыт по умолчанию */
+.coming-soon-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5000; /* выше почти всего */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;  /* отключаем клики, пока скрыт или анимация */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+/* 2) Псевдо-фон (полупрозрачный чёрный, слегка размытый) */
+.coming-soon-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* 3) Собственно «контент» модального окна */
+.coming-soon-content {
+  position: relative;
+  background: #0a1f2d;
+  border-radius: 16px;
+  padding: 24px 32px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+  z-index: 10; /* выше overlay */
+  text-align: center;
+  color: #f0f8ff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+/* 4) Заголовок */
+.coming-soon-content h3 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  color: #00eaff;
+  text-transform: uppercase;
+  text-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
+}
+
+/* 5) Пояснительный текст */
+.coming-soon-content p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  color: #d0f0fa;
+}
+
+/* 6) Кнопки внутри модального */
+.coming-soon-content .cs-ok-btn,
+.coming-soon-content .cs-close-btn {
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(to right, #00eaff, #0077a3);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 10px 20px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* 6.1) Кнопка «OK» */
+.coming-soon-content .cs-ok-btn {
+  display: inline-block;
+}
+.coming-soon-content .cs-ok-btn:hover {
+  background: linear-gradient(to right, #00c4e0, #005f88);
+  transform: translateY(-2px);
+}
+
+/* 6.2) Кнопка «Close» (иконка × в правом верхнем углу) */
+.coming-soon-content .cs-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  color: #eee;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+.coming-soon-content .cs-close-btn:hover {
+  opacity: 1;
+}
+
+/* 7) Когда показываем этот блок — убираем скрытие и поднимаем «контент» */
+.coming-soon-modal.show {
+  pointer-events: all;
+  opacity: 1;
+  visibility: visible;
+}
+.coming-soon-modal.show .coming-soon-content {
+  transform: translateY(0);
+}
+/* -------------------------  
+   Секция «Download APK»  
+   ------------------------- */
+
+/* Основной контейнер секции */
+.download-apk-section {
+  max-width: 900px;            /* ограничиваем ширину для удобства чтения */
+  margin: 40px auto 60px;      /* отступ сверху/снизу и выравнивание по центру */
+  background: linear-gradient(135deg, rgba(10,25,48,0.9) 0%, rgba(0,70,100,0.9) 100%);
+  border: 2px solid #00eaff;   /* тонкая неоновая рамка */
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+  padding: 30px 40px;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Заголовок секции */
+.download-apk-section h2 {
+  font-family: 'Arial', sans-serif;
+  font-size: 2.4rem;
+  text-align: center;
+  color: #00eaff;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  letter-spacing: 0.8px;
+}
+
+/* Блок с версией и датой */
+.apk-meta {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 1rem;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.apk-meta .apk-version,
+.apk-meta .apk-date {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: 12px;
+}
+
+.apk-meta .apk-version strong,
+.apk-meta .apk-date strong {
+  color: #ffffff;
+}
+
+/* Описание секции */
+.apk-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Список преимуществ */
+.apk-features {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+
+.apk-features li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+/* Кастомный маркёр для списка */
+.apk-features li::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background: #00eaff;
+  border-radius: 50%;
+}
+
+/* --------------------------------
+   Блок с кнопками скачивания
+   -------------------------------- */
+
+/* Контейнер кнопок */
+.apk-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+/* Общие стили для всех кнопок */
+.download-btn,
+.store-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Arial', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #001a30;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Кнопка «Download APK» (прямой .apk-файл) */
+.download-btn {
+  background: #00eaff;
+}
+
+.download-btn:hover {
+  background: #00cbd5;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Кнопка «Google Play» */
+.store-btn.google-play {
+  background: #28a745; /* насыщенный «зелёный» Play */
+  color: #ffffff;
+}
+
+.store-btn.google-play:hover {
+  background: #1e7a34;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Кнопка «App Store» / «Apple Pay» */
+.store-btn.app-store {
+  background: #000000; /* чёрная, как у Apple */
+  color: #ffffff;
+}
+
+.store-btn.app-store:hover {
+  background: #333333;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Стили для иконок внутри кнопок */
+.store-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.4));
+}
+
+/* Если хотите, чтобы иконка и текст были точнее по центру: */
+.store-btn .store-icon {
+  margin-left: -4px;
+}
+
+/* --------------------------------
+   Медиа-запросы для адаптива
+   -------------------------------- */
+@media screen and (max-width: 768px) {
+  .download-apk-section {
+    padding: 20px 16px;
+    margin: 20px 12px 40px;
+  }
+  .apk-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .download-apk-section h2 {
+    font-size: 1.8rem;
+  }
+  .apk-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .store-icon {
+    width: 18px;
+    height: 18px;
+  }
 }

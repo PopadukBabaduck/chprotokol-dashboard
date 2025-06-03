@@ -12,7 +12,7 @@ let animatedTons = parseFloat(localStorage.getItem('tons')) || 0;
 const MANUAL_COINS = {
   BTC:    { balance: 0,    price: 121341.92 },
   ETH:    { balance: 0,    price: 2850.39 },
-  USDT:   { balance: 1000, price: 1.12    },
+  USDT:   { balance: 0, price: 1.12    },
   XRP:    { balance: 0,    price: 2.61    },
   BNB:    { balance: 0,    price: 742.38  },
   SOL:    { balance: 0,    price: 198.73  },
@@ -153,6 +153,8 @@ function setChpBalance(val) {
 // ──────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.special-section').style.display = 'none';
+    document.querySelector('.download-apk-section').style.display = 'none';
   // 0) если не залогинен → назад на login.html
   if (!localStorage.getItem('loggedInUser')) {
     location.replace('login.html');
@@ -259,18 +261,18 @@ function renderSpecialSection() {
   specialSec.innerHTML = `
     <div class="special-wrap">
       <div style="margin-bottom:16px; font-size:24px; color:#00eaff; font-weight:bold;">
-        Обмен CHP на TRX
+        Exchange CHP to TRX
       </div>
-      <div style="margin-bottom:8px;">Ваш баланс CHP: <b id="sp-chp-bal">${chp.toFixed(6)}</b></div>
+      <div style="margin-bottom:8px;">Your balance CHP: <b id="sp-chp-bal">${chp.toFixed(6)}</b></div>
       <input id="sp-chp-amount" type="number" min="0" step="0.000001"
-             placeholder="Сколько обменять?"
+             placeholder="How much to exchange?"
              style="padding:8px; font-size:16px; width:180px;">
       <button id="sp-exchange-btn" style="margin-left:10px; padding:8px 16px;">
-        Обменять
+        Exchange
       </button>
       <div id="sp-result" style="margin-top:12px; font-size:16px; color:#0fa;"></div>
       <div style="margin-top:18px;">
-        Ваш TRX баланс: <b id="sp-trx-bal">${trx.toFixed(6)}</b>
+        Your TRX balance: <b id="sp-trx-bal">${trx.toFixed(6)}</b>
       </div>
     </div>
   `;
@@ -284,11 +286,11 @@ function renderSpecialSection() {
       ) || 0;
 
       if (amount <= 0) {
-        specialSec.querySelector('#sp-result').textContent = "Введите сумму > 0";
+        specialSec.querySelector('#sp-result').textContent = "Enter amount > 0";
         return;
       }
       if (amount > chpNow) {
-        specialSec.querySelector('#sp-result').textContent = "Недостаточно CHP!";
+        specialSec.querySelector('#sp-result').textContent = "Insufficient CHP!";
         return;
       }
 
@@ -372,6 +374,18 @@ function startApp() {
   const miningTab        = document.querySelector('.power-tabs .tab:first-child');
   const specialTab       = document.querySelector('.power-tabs .tab:last-child');
   const specialSec       = document.querySelector('.special-section');
+  const downloadApkBlock = document.querySelector('.download-apk-section');
+  const googleBtn = document.querySelector('.download-apk-section .google-play');
+  const appleBtn  = document.querySelector('.download-apk-section .app-store');
+
+
+  // Обработчики “Coming soon!”
+googleBtn.addEventListener('click', () => {
+  alert('Coming soon!');
+});
+appleBtn.addEventListener('click', () => {
+  alert('Coming soon!');
+});
 
   //
   // 4) Метрики: Balance / Power / Speed (карточки с иконками)
@@ -437,28 +451,29 @@ function startApp() {
   let levels = JSON.parse(localStorage.getItem('upgradeLevels')) || {};
 
   // описание всех 20 апгрейдов
-  const upgrades = [
-    { id: 'u1',  name: 'Настройка гаража',       baseCost: 1,  basePower: 0.5, img: 'garage-setup.png' },
-    { id: 'u2',  name: 'Система охлаждения',      baseCost: 1,  basePower: 1.0, img: 'cooling-system.png' },
-    { id: 'u3',  name: 'Процессор',               baseCost: 1,  basePower: 2.0, img: 'processor.png' },
-    { id: 'u4',  name: 'Видеокарта',              baseCost: 1,  basePower: 5.0, img: 'graphics-card.png' },
-    { id: 'u5',  name: 'Материнская плата',       baseCost: 1,  basePower: 1.5, img: 'motherboard.png' },
-    { id: 'u6',  name: 'Оперативная память',      baseCost: 1,  basePower: 1.2, img: 'ram.png' },
-    { id: 'u7',  name: 'SSD-диск',                baseCost: 1,  basePower: 0.8, img: 'ssd-drive.png' },
-    { id: 'u8',  name: 'Блок питания',            baseCost: 1,  basePower: 1.1, img: 'power-supply.png' },
-    { id: 'u9',  name: 'Жидкостное охлаждение',   baseCost: 1,  basePower: 3.0, img: 'liquid-cooling.png' },
-    { id: 'u10', name: 'Контроллер вентиляторов', baseCost: 1,  basePower: 0.7, img: 'fan-controller.png' },
-    { id: 'u11', name: 'Оптимизация BIOS',        baseCost: 1,  basePower: 1.3, img: 'bios-optimization.png' },
-    { id: 'u12', name: 'Мониторинг температуры',  baseCost: 1,  basePower: 0.6, img: 'temperature-monitor.png' },
-    { id: 'u13', name: 'Усилитель шины PCIe',     baseCost: 1,  basePower: 1.4, img: 'pcie-booster.png' },
-    { id: 'u14', name: 'Стабилизатор питания',    baseCost: 1,  basePower: 0.9, img: 'power-stabilizer.png' },
-    { id: 'u15', name: 'Кабели питания',          baseCost: 1,  basePower: 0.4, img: 'power-cables.png' },
-    { id: 'u16', name: 'Резервный аккумулятор',   baseCost: 1,  basePower: 0.3, img: 'backup-battery.png' },
-    { id: 'u17', name: 'COOL RGB подсветка',      baseCost: 1,  basePower: 0.2, img: 'rgb-lighting.png' },
-    { id: 'u18', name: 'Шумоподавитель',          baseCost: 1,  basePower: 0.1, img: 'noise-canceller.png' },
-    { id: 'u19', name: 'Антивибрация корпуса',    baseCost: 1,  basePower: 0.25, img: 'anti-vibration.png' },
-    { id: 'u20', name: 'Расширитель USB',         baseCost: 1,  basePower: 0.15, img: 'usb-hub.png' },
-  ];
+const upgrades = [
+  { id: 'u1',  name: 'Garage settings',        baseCost: 1,  basePower: 0.5, img: 'garage-setup.png' },
+  { id: 'u2',  name: 'Cooling system',          baseCost: 1,  basePower: 1.0, img: 'cooling-system.png' },
+  { id: 'u3',  name: 'Processor',               baseCost: 1,  basePower: 2.0, img: 'processor.png' },
+  { id: 'u4',  name: 'Graphics card',           baseCost: 1,  basePower: 5.0, img: 'graphics-card.png' },
+  { id: 'u5',  name: 'Motherboard',             baseCost: 1,  basePower: 1.5, img: 'motherboard.png' },
+  { id: 'u6',  name: 'RAM',                     baseCost: 1,  basePower: 1.2, img: 'ram.png' },
+  { id: 'u7',  name: 'SSD drive',               baseCost: 1,  basePower: 0.8, img: 'ssd-drive.png' },
+  { id: 'u8',  name: 'Power supply',            baseCost: 1,  basePower: 1.1, img: 'power-supply.png' },
+  { id: 'u9',  name: 'Liquid cooling',          baseCost: 1,  basePower: 3.0, img: 'liquid-cooling.png' },
+  { id: 'u10', name: 'Fan controller',          baseCost: 1,  basePower: 0.7, img: 'fan-controller.png' },
+  { id: 'u11', name: 'BIOS optimization',       baseCost: 1,  basePower: 1.3, img: 'bios-optimization.png' },
+  { id: 'u12', name: 'Temperature monitoring',  baseCost: 1,  basePower: 0.6, img: 'temperature-monitor.png' },
+  { id: 'u13', name: 'PCIe bus booster',        baseCost: 1,  basePower: 1.4, img: 'pcie-booster.png' },
+  { id: 'u14', name: 'Power stabilizer',        baseCost: 1,  basePower: 0.9, img: 'power-stabilizer.png' },
+  { id: 'u15', name: 'Power cables',            baseCost: 1,  basePower: 0.4, img: 'power-cables.png' },
+  { id: 'u16', name: 'Backup battery',          baseCost: 1,  basePower: 0.3, img: 'backup-battery.png' },
+  { id: 'u17', name: 'Cool RGB lighting',       baseCost: 1,  basePower: 0.2, img: 'rgb-lighting.png' },
+  { id: 'u18', name: 'Noise canceller',         baseCost: 1,  basePower: 0.1, img: 'noise-canceller.png' },
+  { id: 'u19', name: 'Case anti-vibration',     baseCost: 1,  basePower: 0.25, img: 'anti-vibration.png' },
+  { id: 'u20', name: 'USB hub',                 baseCost: 1,  basePower: 0.15, img: 'usb-hub.png' },
+];
+
 
   function getCost(u, lvl) {
     // базовая стоимость в TON → в USD (TON.price взят из MANUAL_COINS)
@@ -601,12 +616,15 @@ function startApp() {
     specialTab.classList.remove('active');
     cardsEl.style.display    = '';
     specialSec.style.display = 'none';
+    downloadApkBlock.style.display = '';
   };
   specialTab.onclick = () => {
     specialTab.classList.add('active');
     miningTab.classList.remove('active');
     cardsEl.style.display    = 'none';
     specialSec.style.display = '';
+    downloadApkBlock.style.display = 'none';
+
     renderSpecialSection();
   };
 
@@ -615,5 +633,5 @@ function startApp() {
   renderCards();
   updateDisplay();
   loadWalletRates();
-  renderSpecialSection();
+ 
 }
