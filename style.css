@@ -3040,11 +3040,24 @@ body.no-scroll {
   margin-bottom: 12px;
   text-align: center;
 }
-@media (max-width: 900px) {
+@media screen and (max-width: 480px) {
   .card {
     width: 95vw;
     max-width: 360px;
-    height: 380px;
+    /* заменяем жёсткую высоту на «авто» или min-height, 
+       чтобы текст (название + цена) не обрезался: */
+    height: auto;
+    min-height: 280px; 
+    padding: 8px 0 16px; /* можно чуть увеличить паддинги сверху/снизу */
+  }
+  .card-title {
+    margin-top: 8px;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+  .card-sub {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
   }
 }
 .special-wrap {
