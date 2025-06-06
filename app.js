@@ -505,7 +505,7 @@ const upgrades = [
 
         // пробуем списать USD из кошелька
         if (!spendUSDFromWallet(costUSD)) {
-          showToast(`Нужно ${costUSD.toFixed(2)} USD, недостаточно средств.`);
+          showToast(`Necessary ${costUSD.toFixed(2)} USD, translates to .`);
           return;
         }
 
