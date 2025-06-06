@@ -459,30 +459,6 @@ html, body {
 #wallet-list li:last-child {
   border-bottom: none;
 }
-/* лёгкая пульсация/увеличение при наведении */
-#wallet-btn {
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-#wallet-btn:hover {
-  transform: scale(1.05);
-  background-color: rgba(241, 196, 15, 0.8);
-}
-/* ---------------------------------------------------
-   1) Кнопка WALLET
---------------------------------------------------- */
-#wallet-btn {
-
-  color: var(--accent);
-  padding: 8px 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-#wallet-btn:hover {
-  background: var(--accent);
-  color: #000;
-  transform: scale(1.05);
-}
 
 /* ---------------------------------------------------
    2) Панель WALLET
@@ -558,20 +534,6 @@ html, body {
   opacity: 1;
   transform: translateX(0);
   pointer-events: auto;
-}
-/* 1) Кнопка WALLET */
-#wallet-btn {
-
-  color: var(--accent);
-  padding: 8px 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-#wallet-btn:hover {
-  background: var(--accent);
-  color: #000;
-  transform: scale(1.05);
 }
 
 /* 2) Панель и её «сосиска» */
@@ -1339,13 +1301,6 @@ html, body {
   position: relative;
   opacity: 1; transform: translateY(0);
   pointer-events: all;
-}
-/* Сделать кнопку WALLET фиксированной справа сверху */
-#wallet-btn {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 1000;
 }
 
 /* Подвинуть панель кошелька чуть ниже, чтобы она не закрывала кнопку */
@@ -2255,34 +2210,6 @@ main#main-app {
 }
 
 /* 9) Плавное появление кнопки WALLET */
-#wallet-btn {
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-#wallet-btn:hover {
-  transform: scale(1.1);
-  background: var(--wallet-border);
-  color: #000;
-}
-
-/* 10) Небольшая «оживлялка» при открытии */
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(20px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-.wallet-panel.show {
-  animation: slideIn 0.3s ease-out;
-}
-/* --- Сбрасываем прежний вид кнопки --- */
-#wallet-btn {
-  background: none;         /* убираем фон */
-  border: none;             /* убираем рамку */
-  padding: 0;               /* убираем паддинги */
-  cursor: pointer;
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 1000;
-}
 
 /* --- Стили для самого изображения --- */
 #wallet-btn img {
@@ -2300,17 +2227,6 @@ main#main-app {
 }
 #wallet-btn:active img {
   transform: scale(0.95);
-}
-/* 1) Убираем весь старый фон/рамку/текст */
-#wallet-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 1000;
 }
 
 /* 2) Стили для картинки внутри */
@@ -2348,7 +2264,7 @@ body {
 }
 /* === Кнопка WALLET === */
 #wallet-btn {
-  position: fixed;
+  
   top: 16px;
   right: 16px;
   background: none;
@@ -2482,17 +2398,7 @@ body {
   overflow-x: hidden;  /* убирать горизонтальный скролл */
   overflow-y: auto;    /* вертикальная прокрутка */
 }
-#wallet-btn {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 1000;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  outline: none;
-}
+
 #wallet-btn img {
   display: block;
   width: 140px;       /* или ваш нужный размер */
@@ -2664,16 +2570,7 @@ body {
   border-radius: 2px;
 }
 
-/* ===== exchange modal ===== */
-/* (можете оставить ваши стили или слегка доработать) */
-/* … */
-/* пример для #wallet-btn */
-#wallet-btn {
-  background: none !important;
-  box-shadow: none   !important;
-  border: none       !important;
-  /* остальные стили */
-}
+
 
 
 .wallet-panel {
@@ -2891,24 +2788,7 @@ body {
     display: none;
   }
 }
-#wallet-btn {
-  position: fixed;
-  top: 130px;    /* сдвинули вниз, подгоните под ваш макет */
-  right: 0%;
-  z-index: 9000;
-}
 
-/* 1) Сбрасываем фон/тень у кнопки WALLET */
-#wallet-btn {
-  background: none !important;
-  box-shadow: none   !important;
-  border: none       !important;
-  /* фиксируем позицию и сдвигаем вниз */
-  position: fixed;
-  top: 130px;    /* подгоните это значение под своё расположение */
-  right: 16px;
-  z-index: 1000;
-}
 
 /* 2) Сдвигаем сам оверлей-панель кошелька */
 .wallet-panel {
@@ -3011,21 +2891,7 @@ body {
 }
 
 /* === Кнопка WALLET === */
-#wallet-btn {
-  background: none !important;
-  box-shadow: none   !important;
-  border: 2px solid var(--accent-2) !important;
-  color: var(--text) !important;
-  padding: 0.5rem 1rem !important;
-  border-radius: 0.75rem !important;
-  font-weight: bold !important;
-  text-shadow: 0 0 4px var(--accent-2) !important;
-  position: fixed !important;
-  top: 130px !important;
-  right: 16px !important;
-  z-index: 1000 !important;
-  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-}
+
 #wallet-btn:hover {
   background: var(--accent-2) !important;
   color: #000 !important;
@@ -4395,21 +4261,7 @@ body.no-scroll {
   .main-nav { display: none; }        /* скрываем обычное горизонтальное меню */
   .hamburger { display: block; }      /* показываем гамбургер-иконку */
 }
-/* Базовый стиль (десктоп) */
-#wallet-btn {
-  position: absolute;
-  top: 20px; right: 20px;
-  padding: 8px 16px;
-  font-size: 1rem;
-}
 
-@media (max-width: 600px) {
-  #wallet-btn {
-    top: 12px; right: 12px;
-    padding: 6px 12px;
-    font-size: 0.9rem;
-  }
-}
 .metrics-container {
   display: flex;
   gap: 16px;
@@ -4632,3 +4484,4 @@ body.no-scroll {
     height: 18px;
   }
 }
+ 
