@@ -4460,3 +4460,30 @@ body.no-scroll {
 .cards-window {
   padding-bottom: 160px;  /* подгоните под высоту .special-wrap + отступ */
 }
+/* ========== SITE FOOTER ========== */
+.site-footer {
+  background: rgba(0, 0, 0, 0.5);    /* полупрозрачный тёмный фон */
+  color: rgba(255, 255, 255, 0.7);   /* чуть прозрачно-белый текст */
+  text-align: center;
+  padding: 12px 0;
+  font-size: 0.85rem;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 2rem;                  /* отступ сверху от контента */
+}
+
+/* чтобы строка не растягивалась дико на широких экранах */
+.site-footer .footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+  line-height: 1.4;
+}
+
+/* если хотите закрепить его внизу окна всегда: */
+// .site-footer {
+//   position: fixed;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+//   z-index: 50;
+// }
