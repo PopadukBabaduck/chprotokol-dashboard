@@ -992,18 +992,7 @@ html, body {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* Модалка */
-.exchange-modal {
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-}
-.exchange-modal.show {
-  display: flex;
-}
+
 .exchange-modal__backdrop {
   position: absolute;
   inset: 0;
@@ -3411,16 +3400,7 @@ body.no-scroll {
 /* Убедитесь, что этот кусок лежит строго в самом конце style.css */
 
 /* 1) Основной контейнер модального окна */
-.exchange-modal {
-  display: none;                   /* прячем по умолчанию */
-  position: fixed !important;      /* фиксируем над всем содержимым */
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;         /* растягиваем на всю ширину окна */
-  height: 100vh !important;        /* растягиваем на всю высоту окна */
-  z-index: 9999 !important;        /* самое «большое» значение */
-  pointer-events: none;            /* изначально клики «не летают» по модалке */
-}
+
 
 /* Когда нужно открыть, добавляем класс .show, чтобы появились кликабельность и фон */
 .exchange-modal.show {
@@ -3530,17 +3510,6 @@ body.no-scroll {
 /*  БЛОК FIXED-POSITION СТИЛЕЙ ДЛЯ exchange-modal — КОНЕЦ ФАЙЛА     */
 /* =================================================================== */
 
-/* 1) Основной контейнер (по умолчанию скрыт) */
-.exchange-modal {
-  display: none;                   /* пока нет .show, прячем */
-  position: fixed !important;      /* фиксируем к окну браузера */
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;         /* полная ширина */
-  height: 100vh !important;        /* полная высота */
-  z-index: 9999 !important;        /* поверх всего */
-  pointer-events: none;            /* пока скрыт, клики «мимо» */
-}
 
 /* 2) Когда нужно показать — добавляем .show */
 .exchange-modal.show {
@@ -3656,19 +3625,7 @@ body.no-scroll {
    ================================ */
 
 /* Сам контейнер секции обмена */
-#exchange-section {
-  /* Располагаем блок по центру под основным контентом */
-  position: relative;         /* чтобы он шёл по потоку документа */
-  margin: 40px auto 60px;     /* отступ сверху 40px, по центру, снизу 60px */
-  width: 360px;               /* фиксированная ширина, подберите под дизайн */
-  background: rgba(10, 15, 43, 0.90); /* тёмно-синий / полупрозрачный фон */
-  border-radius: 8px;         /* скруглённые углы */
-  padding: 20px;              /* внутренний отступ */
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6); /* лёгкая тень для «парящего» эффекта */
-  color: #fff;                /* белый цвет основного текста */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  z-index: 1;                 /* чтобы не перекрывался фоном страницы */
-}
+
 
 /* Внутренний контейнер (чтобы было проще выравнивать) */
 #exchange-section .exchange-container {
@@ -3761,19 +3718,7 @@ body.no-scroll {
 /* --------------------------------------------------------------------------
    1. Делам exchange-modal обычным inline-блоком, а не fullscreen-overlay
    -------------------------------------------------------------------------- */
-.exchange-modal {
-  display: none;           /*  скрыто по умолчанию */
-  position: relative;       /*  теперь просто вписано в поток страницы */
-  margin: 0 auto 40px;      /*  по центру страницы с отступом снизу */
-  width: 360px;             /*  фиксированная (или адаптивная) ширина */
-  background: rgba(10,15,43,0.90);
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
-  color: #fff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  z-index: 1;               /*  чтобы не перекрывать важные элементы */
-}
+
 
 /* После добавления класса .show наш блок станет видим */
 .exchange-modal.show {
