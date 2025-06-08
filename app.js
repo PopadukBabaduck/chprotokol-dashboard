@@ -1,7 +1,7 @@
 // app.js
 
 // — курсы для обмена CHP → TRX
-const CHP_TO_USD_RATE = 0.01;
+const CHP_TO_USD_RATE = 0.1;
 const USD_TO_TRX_RATE = 2.5;
 const CHP_TO_TRX_RATE = CHP_TO_USD_RATE * USD_TO_TRX_RATE;
 let animatedTons = parseFloat(localStorage.getItem('tons')) || 0;

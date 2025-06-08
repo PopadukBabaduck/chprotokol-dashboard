@@ -1696,11 +1696,7 @@ video {
   display: block;
 }
 
-/* сам контейнер main-app */
-#main-app {
-  position: relative;
-  z-index: 10;       /* поверх фонового видео */
-}
+
 /* Спрячем видео по-умолчанию */
 .app-bg-video {
   display: none;
@@ -2013,12 +2009,6 @@ body, html {
   color: #ddd;
 }
 /* Ограничиваем ширину и центрируем всё содержимое */
-.container, 
-main#main-app {
-  max-width: 1280px;      /* или любую нужную вам максимальную ширину */
-  margin: 0 auto;         /* центрирование */
-  padding: 0 16px;        /* отступы по бокам на маленьких экранах */
-}
 
 /* Делаем адаптивную сетку из карточек */
 .power-cards {
@@ -2048,10 +2038,6 @@ main#main-app {
   font-size: 0.75rem;
 }
 
-/* Следим, чтобы шапка не съедала часть контента */
-main#main-app {
-  padding-top: 80px;      /* подгоните под высоту вашей шапки */
-}
 /* ——— wallet-panel.css ——— */
 
 /* 1) Цветовая палитра */
@@ -4442,4 +4428,35 @@ body.no-scroll {
     height: 18px;
   }
 }
- 
+ /* Убедитесь, что у родителя (.main-app) есть относительное позиционирование */
+#main-app {
+  position: relative;
+}
+
+.special-section {
+  position: absolute;   /* или fixed, если хотите привязать к окну, а не к #main-app */
+  bottom: 0;
+  left: 50%;            /* смещаем начало блока в середину по горизонтали */
+  transform: translateX(-50%);  /* центруем сам блок относительно этого центра */
+  width: 100%;
+  max-width: 400px;     /* или ваша нужная ширина */
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem 1rem;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.special-section .special-wrap {
+  pointer-events: all;
+  width: 100%;
+  background: rgba(0, 17, 34, 0.95);
+  padding: 16px;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.5);
+}
+
+/* Немного отступа у основной карточек, чтобы их не «урезало» под обмен */
+.cards-window {
+  padding-bottom: 160px;  /* подгоните под высоту .special-wrap + отступ */
+}
